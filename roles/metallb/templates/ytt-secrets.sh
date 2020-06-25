@@ -1,7 +1,7 @@
 {% if use_sops is defined: %}
-    echo "{{ site_file_decrypted.stdout_lines | join('\n') }}" | \
+    echo "{{ site_file_decrypted.stdout }}" | \
 {% else: %}
-    echo "{{ site_file_contents.stdout_lines | join('\n') }}" | \
+    echo "{{ site_file_contents.stdout }}" | \
 {% endif %}
 ytt -f {{ role_path }}/files/secrets/secrets.yaml -f - \
 {% if use_sops is defined: %}

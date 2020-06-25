@@ -4,7 +4,7 @@ metadata:
   name: metallb:controller
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 rules:
@@ -45,7 +45,7 @@ metadata:
   name: metallb:speaker
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 rules:
@@ -81,7 +81,7 @@ metadata:
   name: metallb:controller
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 subjects:
@@ -99,7 +99,7 @@ metadata:
   name: metallb:speaker
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 subjects:
@@ -117,7 +117,7 @@ metadata:
   name: metallb-config-watcher
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 rules:
@@ -136,7 +136,7 @@ metadata:
   name: metallb-pod-lister
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 rules:
@@ -153,7 +153,7 @@ metadata:
   name: metallb-config-watcher
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 subjects:
@@ -172,7 +172,7 @@ metadata:
   name: metallb-pod-lister
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 roleRef:

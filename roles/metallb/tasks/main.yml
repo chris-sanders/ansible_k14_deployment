@@ -1,5 +1,21 @@
 ---
 # tasks file for metallb
+- name: Check required variables
+  fail: msg="{{ item }} not provided"
+  when: vars[item] is undefined
+  loop:
+    - root_folder
+    - site_file
+
+- name: Stat site_file
+  stat:
+      path: "{{ root_folder }}/{{ site_file }}"
+  register: stat_site_file
+
+- name: Check existance of site_file
+  fail: msg="site_file not found"
+  when: not stat_site_file.stat.exists
+
 - name: Create metallb folder
   file:
     path: "{{ root_folder }}/metallb"
@@ -37,19 +53,26 @@
     path: "{{ metallb_folder.path }}/overlay/helm.yaml"
   register: helm_overlay
 
+- name: debug site_file_path
+  debug: var=stat_site_file.stat.path
+
 - name: decrypt site file
   shell: |-
       echo "#@data/values
       #@overlay/match missing_ok=True
       #@overlay/match-child-defaults missing_ok=True
       ---
-      $(sops -d ~/src/k14/ansible/sites/selkie/site.yaml)"
+      $(sops -d {{ stat_site_file.stat.path }})"
   register: site_file_decrypted
   when: use_sops is defined
   
 - name: load site file
   shell: |
-    cat {{ root_folder }}/{{ site_file }}
+    echo "#@data/values
+    #@overlay/match missing_ok=True
+    #@overlay/match-child-defaults missing_ok=True
+    ---
+    $(cat {{ root_folder }}/{{ site_file }})"
   register: site_file_contents
   when: use_sops is not defined
 
@@ -85,6 +108,10 @@
 #- name: decrypt debug
 #  debug: msg="{{ lookup('pipe', 'echo "#@data/values\n---\n$(sops -d ~/src/k14/ansible/sites/selkie/site.yaml)"') }}"
 #  register: 
+
+- name: debug decrypted site
+  debug: var=site_file_decrypted
+  when: use_sops is defined
 
 - name: Process ytt templates
   shell: "{{ lookup('template', 'ytt-templates.sh') }}"

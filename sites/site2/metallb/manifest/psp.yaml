@@ -4,7 +4,7 @@ metadata:
   name: metallb-controller
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -48,7 +48,7 @@ metadata:
   name: metallb-speaker
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
 spec:

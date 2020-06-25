@@ -1,0 +1,5 @@
+metallb:
+  namespace: metallb-home
+  secretkey: Shh it's a secrete
+  addresses:
+  - 10.10.10.1-10.10.10.10

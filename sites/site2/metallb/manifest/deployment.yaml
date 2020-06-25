@@ -4,7 +4,7 @@ metadata:
   name: metallb-controller
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
@@ -19,7 +19,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: metallb
-        helm.sh/chart: metallb-0.1.14
+        helm.sh/chart: metallb-0.1.15
         app.kubernetes.io/instance: metallb
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/component: controller
@@ -30,7 +30,7 @@ spec:
         kubernetes.io/os: linux
       containers:
       - name: metallb-controller
-        image: docker.io/bitnami/metallb-controller:0.9.3-debian-10-r69
+        image: docker.io/bitnami/metallb-controller:0.9.3-debian-10-r85
         imagePullPolicy: IfNotPresent
         args:
         - --port=7472

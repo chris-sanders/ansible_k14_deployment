@@ -1,19 +1,16 @@
-#@data/values
-
-#@overlay/match missing_ok=True
-#@overlay/match-child-defaults missing_ok=True
----
 kapp:
     namespace: kapp
 metallb:
     namespace: metallb
+    addresses:
+    - 10.0.9.1-10.0.9.254
     secretkey: ENC[AES256_GCM,data:y7fXYYjO+vXuC/WCWD8oSIPuLdSNT74HPea503CMgOWetAZOdm0nhamis36f+LNCPYPOMRjTM9F/UanUFg68BcPvV+G8ImKNNgk8ozVl0d7todo/nBqNgoO1ZTf0ojPghJw0n0ikuWm/H0e19Rsy5srQ1SPCfH85Bu558RFzoV3cbCLL/5FkdTbge0pLF8dx7KRCLzP66asE8q0N3GPzhKqQbg7k9jxMeixtI8saIizy3uoswKJuwnbsrZBYqWw9Gm0jSQNORh82RnFdCQrNP8XRHK9PXd9Cfoh7QFAInrgUvrjShsbo47CebmUROBG4dAAcvxKrMINiSNM7Xiahy6PI3QFsr9BCaaiYN+q8zBdMbHE6LeWP5j4EivLEmLhLB58txbI/eo69SKHr71DUinVA6loTI1M7e+8RKug0SpOvjzxWZpBhEMd2GjkAJR8AxhSVIvh3QRU=,iv:q1czSn4+s/txLgHxOBi/hLwKgZqAuFwPR/sQmCN9AHA=,tag:Pz622k+NArxtjqawtdV1dA==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-06-24T17:19:58Z'
-    mac: ENC[AES256_GCM,data:s+nZXgdu1Eq0JqatQqzD4zGImgI8hc5ks66R6c/a1Zk50e7iqOvFJzPa8DNZi1WvDp0XCKkcZCuG/EqWleGTNvEdm8VpiUsymhc5LBzBAJvj27L2Ca9nSTDokJQghbKk/L5qyTAvUADyuD2VDeKn3+Ww0rv6er1ZJMRyc2GRqd0=,iv:Jla9CF+s3s/9ip9rxbUstDVSLugIJ+U82+ZaPuiCnD0=,tag:QdmAEQ6H9nPZ9wgcUwVrJw==,type:str]
+    lastmodified: '2020-06-25T15:12:14Z'
+    mac: ENC[AES256_GCM,data:0JJnM3V+SDN6Y+TyjH5wbxnHrMCJYeb+v/c4AZBFeSoOgrr8gk9+Dn5hLGt3qar9nRAS2k1Lc4F5EZqaksU8hW0LeinWPMvQmu0RPw0wYTEtoKPtvKK1qrZncSC8xzfEgSndJlB+z5Lq4SqIimPpPV3u7K9KuUci6BkRDL++/SI=,iv:N+DFl21bGtv0D5AIZAt8BoDdAD8Xbk9TiekE61Qv6u0=,tag:HrNmtwPJhrJjRllrp4EVFQ==,type:str]
     pgp:
     -   created_at: '2020-06-24T17:19:58Z'
         enc: |-

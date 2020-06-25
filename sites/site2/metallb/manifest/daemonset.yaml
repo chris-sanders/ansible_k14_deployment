@@ -4,7 +4,7 @@ metadata:
   name: metallb-speaker
   labels:
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.14
+    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: speaker
@@ -18,17 +18,20 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: metallb
-        helm.sh/chart: metallb-0.1.14
+        helm.sh/chart: metallb-0.1.15
         app.kubernetes.io/instance: metallb
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/component: speaker
     spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
       serviceAccountName: metallb-speaker
       terminationGracePeriodSeconds: 2
       hostNetwork: true
       containers:
       - name: metallb-speaker
-        image: docker.io/bitnami/metallb-speaker:0.9.3-debian-10-r77
+        image: docker.io/bitnami/metallb-speaker:0.9.3-debian-10-r93
         imagePullPolicy: IfNotPresent
         args:
         - --port=7472

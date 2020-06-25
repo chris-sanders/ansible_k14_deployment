@@ -5,12 +5,14 @@
     kapp deploy -a metallb -n (@= data.values.kapp.namespace @) \
     --into-ns (@= data.values.metallb.namespace @) \
     -f manifest \
+    -y \
     -f -
   (@- else: -@)
     kapp deploy -a metallb -n (@= data.values.kapp.namespace @) \
     --into-ns (@= data.values.metallb.namespace @) \
     -f manifest \
-    -f secrets
+    -f secrets \
+    -y
   (@- end -@)
 (@- else: -@)
   (@- if hasattr(data.values, "sops"): -@)
@@ -18,11 +20,13 @@
     kapp deploy -a metallb \
     --into-ns (@= data.values.metallb.namespace @) \
     -f manifest \
+    -y \
     -f -
   (@- else: -@)
     kapp deploy -a metallb \
     --into-ns (@= data.values.metallb.namespace @) \
     -f manifest \
-    -f secrets
+    -f secrets \
+    -y
   (@- end -@)
 (@- end -@)

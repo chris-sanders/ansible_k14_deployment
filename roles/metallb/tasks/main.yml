@@ -53,8 +53,8 @@
     path: "{{ metallb_folder.path }}/overlay/helm.yaml"
   register: helm_overlay
 
-- name: debug site_file_path
-  debug: var=stat_site_file.stat.path
+  #- name: debug site_file_path
+  #  debug: var=stat_site_file.stat.path
 
 - name: decrypt site file
   shell: |-
@@ -64,6 +64,11 @@
       ---
       $(sops -d {{ stat_site_file.stat.path }})"
   register: site_file_decrypted
+  when: use_sops is defined
+
+- name: store decrypted site file in var
+  set_fact:
+      site_file_content: site_file_decrypted.stdout
   when: use_sops is defined
   
 - name: load site file
@@ -76,42 +81,13 @@
   register: site_file_contents
   when: use_sops is not defined
 
+- name: store decrypted site file in var
+  set_fact:
+      site_file_content: site_file_contents.stdout
+  when: use_sops is not defined
+
 - name: Process ytt secrets
   shell: "{{ lookup('template', 'ytt-secrets.sh') }}"
-
-#- name: debug sops
-#  debug: var=sops.stdout_lines
-
-#- name: process secrets template
-#  shell: |
-#    echo "{{ site_decrypted.stdout_lines | join('\n') }}" | \
-#    ytt -f {{ role_path }}/files/secrets/secrets.yaml -f - | \
-#    sops --input-type yaml --output-type yaml \
-#    -e /dev/stdin > {{ metallb_folder.path }}/secrets/secrets.yaml
-
-
-#- name: encrypt secrets
-#  shell: |
-#    echo "{{ secrets.stdout_lines | join('\n') }}" | \
-#    sops --input-type yaml -e /dev/stdin
-#  register: encrypted
-#
-#- name: debug encrypted
-#  debug: var=encrypted.stdout_lines
-    # sops -e -
-    # --output-files {{ build_dir.path }}/secrets \
-    # -f -
-
-#- name: decrypt debug shell
-#  debug: var=sops.stdout_lines
-
-#- name: decrypt debug
-#  debug: msg="{{ lookup('pipe', 'echo "#@data/values\n---\n$(sops -d ~/src/k14/ansible/sites/selkie/site.yaml)"') }}"
-#  register: 
-
-- name: debug decrypted site
-  debug: var=site_file_decrypted
-  when: use_sops is defined
 
 - name: Process ytt templates
   shell: "{{ lookup('template', 'ytt-templates.sh') }}"

@@ -1,7 +1,7 @@
 all:
     hosts:
         site1:
-            root_folder: ~/src/k14/ansible/sites/site1 
+            root_folder: ./sites/site1 
             use_sops: True
         site2:
             root_folder: ~/src/k14/ansible/sites/site2 

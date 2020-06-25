@@ -1,0 +1,10 @@
+#@data/values
+
+#@overlay/match missing_ok=True
+#@overlay/match-child-defaults missing_ok=True
+---
+kapp:
+    namespace: kapp
+metallb:
+    namespace: metallb
+    secretkey: "a1Y4VUVYc1dkcVEwdlJScFpxWkVDUEFFdnkxS0pydzdCMlRjRktDc1lLaGU3bUx1OGc1eXV6RWM3MFBKUFkxYVZpN1Jyd0pSYjFsdjVyWFBVZHlGNjBZdHZXa29GRkVGRlZrVjdveGZFNk5IbjlVN1RiaGlzOWJRbEdrRWR5M0JFeU9iZURyOHhHeTJKMXF3MlB4dTRsc2c5eGlTMzZMeW1WMGZET3ZsM1huRzUzYWxmT0szOXJOazRNOWFSTlh0cXJjYXlpSlBESnB0OTU2TXRwTVpVWEJUblRtVkRNeTE1cEJzZUJBN1licnFmeE5kWVFPYVN3TU84SHhJVDhTeQ==" 

@@ -1,0 +1,121 @@
+---
+# tasks file for metallb
+- name: Create metallb folder
+  file:
+    path: "{{ root_folder }}/metallb"
+    state: directory
+    mode: 0774
+  register: metallb_folder
+
+- name: Create manifest folder
+  file:
+    path: "{{ metallb_folder.path }}/manifest"
+    state: directory
+    mode: 0774
+
+- name: Create secrets folder
+  file:
+    path: "{{ metallb_folder.path }}/secrets"
+    state: directory
+    mode: 0774
+
+- name: Create tmpfolder
+  tempfile:
+    state: directory
+    suffix: metallb
+  register: build_dir
+
+- name: Update helm chart 
+  local_action:
+    module: git
+    repo: https://github.com/bitnami/charts
+    dest: "{{ role_path }}/files/charts"
+  run_once: true
+
+- name: Check if helm overlay exists
+  stat:
+    path: "{{ metallb_folder.path }}/overlay/helm.yaml"
+  register: helm_overlay
+
+- name: decrypt site file
+  shell: |-
+      echo "#@data/values
+      #@overlay/match missing_ok=True
+      #@overlay/match-child-defaults missing_ok=True
+      ---
+      $(sops -d ~/src/k14/ansible/sites/selkie/site.yaml)"
+  register: site_file_decrypted
+  when: use_sops is defined
+  
+- name: load site file
+  shell: |
+    cat {{ root_folder }}/{{ site_file }}
+  register: site_file_contents
+  when: use_sops is not defined
+
+- name: Process ytt secrets
+  shell: "{{ lookup('template', 'ytt-secrets.sh') }}"
+
+#- name: debug sops
+#  debug: var=sops.stdout_lines
+
+#- name: process secrets template
+#  shell: |
+#    echo "{{ site_decrypted.stdout_lines | join('\n') }}" | \
+#    ytt -f {{ role_path }}/files/secrets/secrets.yaml -f - | \
+#    sops --input-type yaml --output-type yaml \
+#    -e /dev/stdin > {{ metallb_folder.path }}/secrets/secrets.yaml
+
+
+#- name: encrypt secrets
+#  shell: |
+#    echo "{{ secrets.stdout_lines | join('\n') }}" | \
+#    sops --input-type yaml -e /dev/stdin
+#  register: encrypted
+#
+#- name: debug encrypted
+#  debug: var=encrypted.stdout_lines
+    # sops -e -
+    # --output-files {{ build_dir.path }}/secrets \
+    # -f -
+
+#- name: decrypt debug shell
+#  debug: var=sops.stdout_lines
+
+#- name: decrypt debug
+#  debug: msg="{{ lookup('pipe', 'echo "#@data/values\n---\n$(sops -d ~/src/k14/ansible/sites/selkie/site.yaml)"') }}"
+#  register: 
+
+- name: Process ytt templates
+  shell: "{{ lookup('template', 'ytt-templates.sh') }}"
+ 
+- name: Generate helm manifest
+  shell: |
+      helm template metallb {{ role_path }}/files/charts/bitnami/metallb/ \
+      -f {{ build_dir.path }}/ytt/helm-values.yaml \
+      -n metallb \
+      --output-dir {{ build_dir.path }}/helm/
+
+- name: Check if manifest overlay exists
+  stat:
+    path: "{{ metallb_folder.path }}/overlay/manifest.yaml"
+  register: manifest_overlay
+
+- name: Apply manifest overlay
+  shell: "{{ lookup('template', 'ytt-overlay.sh') }}"
+
+- name: Assemble manifest
+  shell: |
+      cp {{ build_dir.path }}/ytt/ConfigMap.yaml {{ metallb_folder.path }}/manifest/
+      cp {{ build_dir.path }}/ytt/namespace.yaml {{ metallb_folder.path }}/manifest/
+
+- name: Fix permission
+  shell: |
+      chmod ugo-x {{ metallb_folder.path }}/manifest/*
+      chmod ugo-x {{ metallb_folder.path }}/secrets/*
+  args:
+      warn: no
+
+- name: Render text-templates
+  shell: "{{ lookup('template', 'ytt-text-templates.sh') }}"
+

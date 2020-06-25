@@ -1,0 +1,9 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"name": "helm-values"})
+---
+#@overlay/match missing_ok=True
+global:
+    imageRegistry: myRegistryName
+    imagePullSecrets:
+        - myRegistryKeySecretName

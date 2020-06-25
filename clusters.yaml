@@ -1,0 +1,16 @@
+all:
+    hosts:
+        selkie:
+            root_folder: ~/src/k14/ansible/sites/selkie 
+            use_sops: True
+        home:
+            root_folder: ~/src/k14/ansible/sites/home 
+    vars:
+        ansible_connection: local
+        ansible_python_interpreter: "{{ansible_playbook_python}}"
+        site_file: site.yaml
+
+metallb:
+    hosts:
+        selkie:
+        home:

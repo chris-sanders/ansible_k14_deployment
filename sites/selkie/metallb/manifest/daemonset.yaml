@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: metallb-speaker
+  labels:
+    app.kubernetes.io/name: metallb
+    helm.sh/chart: metallb-0.1.14
+    app.kubernetes.io/instance: metallb
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: speaker
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: metallb
+      app.kubernetes.io/instance: metallb
+      app.kubernetes.io/component: speaker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: metallb
+        helm.sh/chart: metallb-0.1.14
+        app.kubernetes.io/instance: metallb
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/component: speaker
+    spec:
+      serviceAccountName: metallb-speaker
+      terminationGracePeriodSeconds: 2
+      hostNetwork: true
+      containers:
+      - name: metallb-speaker
+        image: docker.io/bitnami/metallb-speaker:0.9.3-debian-10-r77
+        imagePullPolicy: IfNotPresent
+        args:
+        - --port=7472
+        - --config=metallb-config
+        env:
+        - name: METALLB_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: METALLB_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: METALLB_ML_BIND_ADDR
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: METALLB_ML_LABELS
+          value: app.kubernetes.io/name=metallb,app.kubernetes.io/component=speaker
+        - name: METALLB_ML_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: METALLB_ML_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: metallb-memberlist
+              key: secretkey
+        envFrom: null
+        ports:
+        - name: metrics
+          containerPort: 7472
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: metrics
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: metrics
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        securityContext:
+          runAsUser: 0
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+            add:
+            - NET_ADMIN
+            - NET_RAW
+            - SYS_ADMIN
+      nodeSelector:
+        kubernetes.io/os: linux

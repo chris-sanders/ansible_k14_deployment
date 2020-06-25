@@ -1,0 +1,6 @@
+- hosts: metallb
+  gather_facts: no
+  roles:
+      - metallb
+
+

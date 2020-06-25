@@ -12,7 +12,7 @@
       path: "{{ root_folder }}/{{ site_file }}"
   register: stat_site_file
 
-- name: Check existance of site_file
+- name: Break if site_file missing
   fail: msg="site_file not found"
   when: not stat_site_file.stat.exists
 
@@ -68,7 +68,7 @@
 
 - name: store decrypted site file in var
   set_fact:
-      site_file_content: site_file_decrypted.stdout
+      site_file_content: "{{ site_file_decrypted.stdout }}"
   when: use_sops is defined
   
 - name: load site file
@@ -78,12 +78,12 @@
     #@overlay/match-child-defaults missing_ok=True
     ---
     $(cat {{ root_folder }}/{{ site_file }})"
-  register: site_file_contents
+  register: site_file_plain
   when: use_sops is not defined
 
-- name: store decrypted site file in var
+- name: store plain text site file in var
   set_fact:
-      site_file_content: site_file_contents.stdout
+      site_file_content: "{{ site_file_plain.stdout }}"
   when: use_sops is not defined
 
 - name: Process ytt secrets

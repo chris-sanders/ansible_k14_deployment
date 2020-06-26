@@ -4,7 +4,7 @@ all:
             root_folder: ./sites/site1 
             use_sops: True
         site2:
-            root_folder: ~/src/k14/ansible/sites/site2 
+            root_folder: ./sites/site2 
     vars:
         ansible_connection: local
         ansible_python_interpreter: "{{ansible_playbook_python}}"

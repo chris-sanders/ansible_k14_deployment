@@ -9,37 +9,37 @@ Requirements
 To execute the chart you must have 
  - ytt
  - helm3
-To update the helm chart in this role requires:
- - vendir
+ - git
+ - sops (only if using encrypted secrets)
 
-Ytt and Vendir are part of the [k14s][k14] project. Overlays used by this role utilize ytt see
+Ytt  is part of the [k14s][k14] project. Overlays used by this role utilize ytt see
 documentation from the ytt project for details.
 
 Role Variables
 --------------
 
  - root_folder: Required for each host, specifies the base folder for this role
- - site_file: Optional file relative to root_folder for site specific configuration
+ - site_file: Required for each host, file path relative to root_folder for site specific configuration
 
 Site Variables
 --------------
+Required:
+ - metallb.addresses: List of address spaces for meatllb to use as static IP
+ - metallb.secretekey: Secret to encrypt speaker communication for fast dead node
+   detection. Generate with "$(openssl rand -base64 128)"
+Optional:
  - kapp.namespace: The namespace that kapp will deploy the kapp application configmap into
  - metallb.namespace: The namespace that metallb will be deployed into
- - metallb.addresses: List of address spaces for meatllb to use as static IP
 
 This file can set any values found in files/templates/default-values.yaml
 
 Example site_file
 ```yaml
-#@data/values
-
-#@overlay/match missing_ok=True
-#@overlay/match-child-defaults missing_ok=True
----
 kapp:
     namespace: kapp
 metallb:
     namespace: metallb
+    secretkey: my-secrete-key
     addresses:
     - "10.0.9.1-10.0.9.254"
 ```
@@ -55,7 +55,6 @@ Example:
 
 #@overlay/match by=overlay.subset({"name": "helm-values"})
 ---
-name: "helm-values"
 #@overlay/match missing_ok=True
 global:
     imageRegistry: myRegistryName

@@ -1,36 +1,19 @@
 (@ load("@ytt:data", "data") @)
-(@- if hasattr(data.values,"kapp") and hasattr(data.values.kapp, "namespace"): -@)
-  (@- if hasattr(data.values, "sops"): -@)
-    # Decrypt secretes and deploy
-    sops -d secrets/secrets.yaml | \
-    kapp deploy -a metallb -n (@= data.values.kapp.namespace @) \
-    --into-ns (@= data.values.metallb.namespace @) \
-    -f manifest \
-    -y \
-    -f -
-  (@- else: -@)
-    # Deploy, no sops encryption
-    kapp deploy -a metallb -n (@= data.values.kapp.namespace @) \
-    --into-ns (@= data.values.metallb.namespace @) \
-    -f manifest \
-    -f secrets \
-    -y
-  (@- end -@)
+(@- if data.values.sops: -@)
+# Decrypt secrets and deploy
+sops -d secrets/secrets.yaml | \
 (@- else: -@)
-  (@- if hasattr(data.values, "sops"): -@)
-    # Decrypt secretes and deploy
-    sops -d secrets/secrets.yaml | \
-    kapp deploy -a metallb \
-    --into-ns (@= data.values.metallb.namespace @) \
-    -f manifest \
-    -y \
-    -f -
-  (@- else: -@)
-    # Deploy, no sops encryption
-    kapp deploy -a metallb \
-    --into-ns (@= data.values.metallb.namespace @) \
-    -f manifest \
-    -f secrets \
-    -y
-  (@- end -@)
-(@- end -@)
+# Deploy with secrets
+(@- end @)
+kapp deploy -a metallb \
+(@- if hasattr(data.values,"kapp") and hasattr(data.values.kapp, "namespace"): @)
+-n (@= data.values.kapp.namespace @) \ 
+(@- end @)
+--into-ns (@= data.values.metallb.namespace @) \
+-f manifest \
+-y \
+(@- if data.values.sops: @)
+-f -
+(@- else: @)
+-f secrets
+(@- end @)

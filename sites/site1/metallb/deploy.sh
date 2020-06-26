@@ -1,6 +1,8 @@
-# Deploy, no sops encryption
-    kapp deploy -a metallb \
-    --into-ns metallb \
-    -f manifest \
-    -f secrets \
-    -y
+# Decrypt secrets and deploy
+sops -d secrets/secrets.yaml | \
+kapp deploy -a metallb \
+-n kapp \
+--into-ns metallb \
+-f manifest \
+-y \
+-f -

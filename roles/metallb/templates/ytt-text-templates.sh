@@ -5,6 +5,7 @@ ytt -f {{ role_path }}/files/text-templates \
 --data-value sops=True \
 {% endif %}
 --file-mark deploy.sh:type=text-template \
+--file-mark diff.sh:type=text-template \
 --output-files {{ metallb_folder.path }} \
 -f -
 

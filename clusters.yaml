@@ -2,7 +2,6 @@ all:
     hosts:
         site1:
             root_folder: ./sites/site1 
-            use_sops: True
         site2:
             root_folder: ./sites/site2 
     vars:
@@ -10,7 +9,11 @@ all:
         ansible_python_interpreter: "{{ansible_playbook_python}}"
         site_file: site.yaml
 
-metallb:
+#metallb:
+#    hosts:
+#        site1:
+#        site2:
+traefik:
     hosts:
         site1:
-        site2:
+

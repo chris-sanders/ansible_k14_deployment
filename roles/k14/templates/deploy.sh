@@ -8,8 +8,8 @@ kapp deploy -a {{ k14_app }} \
 {% if k14_site.kapp.namespace is defined: %}
 -n {{ k14_site.kapp.namespace }} \
 {% endif %}
---into-ns {{ k14_app_namespace }}
--f manifest \ 
+--into-ns {{ k14_app_namespace }} \
+-f manifest \
 -y \
 {%if k14_sops.found: %}
 -f -

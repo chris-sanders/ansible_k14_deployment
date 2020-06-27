@@ -1,6 +1,6 @@
-ytt -f {{ build_dir.path }}/helm/metallb/templates/ \
+ytt -f {{ tmp_folder.path }}/helm/{{ k14_app }}/templates/ \
 {% if manifest_overlay.stat.exists: %}
     -f {{ manifest_overlay.stat.path }} \
 {% endif %}
 --ignore-unknown-comments \
---output-files {{ metallb_folder.path }}/manifest/
+--output-files {{ app_folder.path }}/manifest/

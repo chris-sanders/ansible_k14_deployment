@@ -1,6 +1,6 @@
 echo "{{ site_file_content }}" | \
-ytt -f {{ role_path }}/files/templates \
---output-files {{ build_dir.path }}/ytt \
+ytt -f {{ ansible_parent_role_paths[0] }}/files/templates \
+--output-files {{ tmp_folder.path }}/ytt \
 {% if helm_overlay.stat.exists: %}
     -f {{ helm_overlay.stat.path }} \
 {% endif %}

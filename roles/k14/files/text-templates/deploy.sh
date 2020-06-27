@@ -5,7 +5,7 @@ sops -d secrets/secrets.yaml | \
 (@- else: -@)
 # Deploy with secrets
 (@- end @)
-kapp deploy -a metallb \
+kapp deploy -a {{ k14_app }} \
 (@- if hasattr(data.values,"kapp") and hasattr(data.values.kapp, "namespace"): @)
 -n (@= data.values.kapp.namespace @) \ 
 (@- end @)

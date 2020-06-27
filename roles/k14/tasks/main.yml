@@ -1,0 +1,180 @@
+---
+# tasks file for metallb
+- name: Check required variables
+  fail: msg="{{ item }} not provided"
+  when: vars[item] is undefined
+  loop:
+    - root_folder
+    - site_file
+
+- name: Stat site_file
+  stat:
+      path: "{{ root_folder }}/{{ site_file }}"
+  register: stat_site_file
+
+- name: Break if site_file missing
+  fail: msg="site_file not found"
+  when: not stat_site_file.stat.exists
+
+- name: Check for sops encryption
+  lineinfile:
+    name: "{{ stat_site_file.stat.path }}"
+    regex: "^sops:"
+    state: absent
+  check_mode: yes
+  register: k14_sops
+
+- name: debug sops usage
+  debug: var=k14_sops.found
+  tags: [never, debug]
+
+- name: Create {{ k14_app }} folder
+  file:
+    path: "{{ root_folder }}/{{ k14_app }}"
+    state: directory
+    mode: 0774
+  register: app_folder
+
+- name: Create manifest folder
+  file:
+    path: "{{ app_folder.path }}/manifest"
+    state: directory
+    mode: 0774
+  register: manifest_folder
+
+- name: Create secrets folder
+  file:
+    path: "{{ app_folder.path }}/secrets"
+    state: directory
+    mode: 0774
+  register: secrets_folder
+
+- name: Create tmpfolder
+  tempfile:
+    state: directory
+    suffix: ".{{ k14_app }}"
+  register: tmp_folder
+
+- name: Update helm chart 
+  local_action:
+    module: git
+    repo: "{{ k14_helm_repo }}"
+    dest: "{{ role_path }}/charts/{{ k14_app }}"
+  run_once: true
+  when: k14_helm_repo is defined
+  register: chart_folder
+
+- name: Check if helm overlay exists
+  stat:
+    path: "{{ app_folder.path }}/overlay/helm.yaml"
+  register: helm_overlay
+
+- name: load sops site file
+  shell: |-
+      echo "#@data/values
+      #@overlay/match missing_ok=True
+      #@overlay/match-child-defaults missing_ok=True
+      ---
+      $(sops -d {{ stat_site_file.stat.path }})"
+  register: k14_site_file_sops
+  when: k14_sops.found
+
+- name: store decrypted site file in var
+  set_fact:
+      site_file_content: "{{ k14_site_file_sops.stdout }}"
+  when: k14_sops.found
+  
+- name: load plain site file
+  shell: |
+    echo "#@data/values
+    #@overlay/match missing_ok=True
+    #@overlay/match-child-defaults missing_ok=True
+    ---
+    $(cat {{ stat_site_file.stat.path }})"
+  register: k14_site_file_plain
+  when: not k14_sops.found
+
+- name: store plain text site file in var
+  set_fact:
+      site_file_content: "{{ k14_site_file_plain.stdout }}"
+  when: not k14_sops.found
+
+- name: debug site_file
+  debug: var=site_file_content
+  tags: [never, debug]
+
+- name: find secrets templates
+  stat:
+      path: "{{ item }}" 
+  register: k14_secrets_list
+  with_fileglob: "{{ ansible_parent_role_paths[0] }}/files/secrets/*"
+
+- name: debug secrets list
+  debug: var=k14_secrets_list
+  tags: [never, debug]
+
+- name: Process ytt secrets
+  shell: "{{ lookup('template', 'ytt-secrets.sh') }}"
+
+- name: Process ytt templates
+  shell: "{{ lookup('template', 'ytt-templates.sh') }}"
+ 
+- name: Generate helm manifest
+  shell: |
+      helm template {{ k14_app }} {{ role_path }}/charts/{{ k14_app }}/{{ k14_helm_path }} \
+      -f {{tmp_folder.path }}/ytt/{{ k14_helm_values }} \
+      -n {{ k14_app }} \
+      --output-dir {{ tmp_folder.path }}/helm/
+
+- name: Check if manifest overlay exists
+  stat:
+    path: "{{ app_folder.path }}/overlay/manifest.yaml"
+  register: manifest_overlay
+
+- name: Apply manifest overlay
+  shell: "{{ lookup('template', 'ytt-overlay.sh') }}"
+
+- name: Assemble manifest
+  shell: |
+      cp {{ tmp_folder.path }}/ytt/{{ item }} {{ app_folder.path }}/manifest/
+  loop: "{{ k14_manifest_files }}"
+
+- name: Fix permission
+  shell: |
+      chmod ugo-x {{ app_folder.path }}/manifest/*
+      chmod ugo-x {{ app_folder.path }}/secrets/*
+  args:
+      warn: no
+
+#- name: find text-templates
+#  stat:
+#      path: "{{ item }}" 
+#  register: k14_text_templates_list
+#  with_fileglob: "{{ ansible_parent_role_paths[0] }}/files/text-templates/*"
+
+# shell: "{{ lookup('template', 'ytt-text-templates.sh') }}"
+- name: Include vars of site_file into the 'site' variable
+  include_vars:
+    file: "{{ stat_site_file.stat.path }}"
+    name: k14_site
+
+- name: Debug site_file loading
+  debug: var=k14_site
+  tags: [never, debug]
+
+- name: Register app namespace
+  set_fact:
+      k14_app_namespace: "{{ vars['k14_site'][k14_app]['namespace'] }}"
+
+- name: Debug k14_app_namespace
+  debug: var=k14_app_namespace
+  tags: [never, debug]
+
+- name: Render scripts
+  template:
+    src: "{{ role_path }}/templates/{{ item }}"
+    dest: "{{ app_folder.path }}"
+    mode: '0774'
+  loop:
+      - deploy.sh
+      - diff.sh

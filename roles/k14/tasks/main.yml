@@ -115,6 +115,7 @@
 
 - name: Process ytt secrets
   shell: "{{ lookup('template', 'ytt-secrets.sh') }}"
+  when: not k14_secrets_list.skipped
 
 - name: Process ytt templates
   shell: "{{ lookup('template', 'ytt-templates.sh') }}"
@@ -138,33 +139,36 @@
   shell: |
       cp {{ tmp_folder.path }}/ytt/{{ item }} {{ app_folder.path }}/manifest/
   loop: "{{ k14_manifest_files }}"
+  when: k14_manifest_files is defined
 
-- name: Fix permission
+- name: Fix manifest permission
   shell: |
-      chmod ugo-x {{ app_folder.path }}/manifest/*
-      chmod ugo-x {{ app_folder.path }}/secrets/*
+      chmod ugo-x,ug+rwX -R {{ app_folder.path }}/manifest/*
   args:
       warn: no
 
-#- name: find text-templates
-#  stat:
-#      path: "{{ item }}" 
-#  register: k14_text_templates_list
-#  with_fileglob: "{{ ansible_parent_role_paths[0] }}/files/text-templates/*"
+- name: Fix secrets permission
+  shell: |
+      chmod ugo-x,ug+rwX {{ app_folder.path }}/secrets/*
+  args:
+      warn: no
+  when: not k14_secrets_list.skipped
 
-# shell: "{{ lookup('template', 'ytt-text-templates.sh') }}"
-- name: Include vars of site_file into the 'site' variable
+- name: Generate jinja-vars
+  shell: "{{ lookup('template', 'ytt-jinja-vars.sh') }}"
+
+- name: Include jinja-vars into the 'ytt' variable
   include_vars:
-    file: "{{ stat_site_file.stat.path }}"
-    name: k14_site
+    file: "{{ tmp_folder.path }}/jinja-vars.yaml"
+    name: ytt
 
-- name: Debug site_file loading
-  debug: var=k14_site
+- name: Debug jinja-vars loading
+  debug: var=ytt
   tags: [never, debug]
 
 - name: Register app namespace
   set_fact:
-      k14_app_namespace: "{{ vars['k14_site'][k14_app]['namespace'] }}"
+      k14_app_namespace: "{{ vars['ytt'][k14_app]['namespace'] }}"
 
 - name: Debug k14_app_namespace
   debug: var=k14_app_namespace

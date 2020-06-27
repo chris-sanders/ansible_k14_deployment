@@ -1,6 +1,0 @@
-#@data/values
----
-sops: False
-metallb:
-    config_name: metallb-config
-    namespace: metallb

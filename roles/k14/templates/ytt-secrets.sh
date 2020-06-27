@@ -4,5 +4,5 @@
     {% if k14_sops.found: %}
 	| sops --input-type yaml --output-type yaml -e /dev/stdin \
     {% endif %}
-    > {{ app_folder.path }}/secrets/secrets.yaml
+    > {{ app_folder.path }}/secrets/{{ secret.item.split('/')[-1] }}
 {% endfor %}

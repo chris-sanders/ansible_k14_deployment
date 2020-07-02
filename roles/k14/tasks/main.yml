@@ -115,7 +115,7 @@
 
 - name: Process ytt secrets
   shell: "{{ lookup('template', 'ytt-secrets.sh') }}"
-  when: not k14_secrets_list.skipped
+  when: k14_secrets_list.skipped is not defined
 
 - name: Process ytt templates
   shell: "{{ lookup('template', 'ytt-templates.sh') }}"
@@ -131,6 +131,11 @@
   stat:
     path: "{{ app_folder.path }}/overlay/manifest.yaml"
   register: manifest_overlay
+
+- name: Check if role manifest overlay exists
+  stat:
+    path: "{{ ansible_parent_role_paths[0] }}/files/overlays/manifest.yaml"
+  register: role_manifest_overlay
 
 - name: Apply manifest overlay
   shell: "{{ lookup('template', 'ytt-overlay.sh') }}"
@@ -152,7 +157,7 @@
       chmod ugo-x,ug+rwX {{ app_folder.path }}/secrets/*
   args:
       warn: no
-  when: not k14_secrets_list.skipped
+  when: k14_secrets_list.skipped is not defined
 
 - name: Generate jinja-vars
   shell: "{{ lookup('template', 'ytt-jinja-vars.sh') }}"
@@ -173,6 +178,16 @@
 - name: Debug k14_app_namespace
   debug: var=k14_app_namespace
   tags: [never, debug]
+
+- name: Include site_file vars into the 'site_file' variable
+  include_vars:
+    file: "{{ stat_site_file.stat.path }}"
+    name: site_file
+
+- name: debug site_file vars
+  debug: var=site_file
+  tags: [never, debug]
+
 
 - name: Render scripts
   template:

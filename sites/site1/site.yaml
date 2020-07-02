@@ -4,34 +4,39 @@ metallb:
     namespace: metallb
     addresses:
     - 10.0.9.1-10.0.9.254
-    secretkey: ENC[AES256_GCM,data:y7fXYYjO+vXuC/WCWD8oSIPuLdSNT74HPea503CMgOWetAZOdm0nhamis36f+LNCPYPOMRjTM9F/UanUFg68BcPvV+G8ImKNNgk8ozVl0d7todo/nBqNgoO1ZTf0ojPghJw0n0ikuWm/H0e19Rsy5srQ1SPCfH85Bu558RFzoV3cbCLL/5FkdTbge0pLF8dx7KRCLzP66asE8q0N3GPzhKqQbg7k9jxMeixtI8saIizy3uoswKJuwnbsrZBYqWw9Gm0jSQNORh82RnFdCQrNP8XRHK9PXd9Cfoh7QFAInrgUvrjShsbo47CebmUROBG4dAAcvxKrMINiSNM7Xiahy6PI3QFsr9BCaaiYN+q8zBdMbHE6LeWP5j4EivLEmLhLB58txbI/eo69SKHr71DUinVA6loTI1M7e+8RKug0SpOvjzxWZpBhEMd2GjkAJR8AxhSVIvh3QRU=,iv:q1czSn4+s/txLgHxOBi/hLwKgZqAuFwPR/sQmCN9AHA=,tag:Pz622k+NArxtjqawtdV1dA==,type:str]
+    secretkey: ENC[AES256_GCM,data:igAu4hwhmWg3I/jMQuhprpnJOq8RZ/XgKgyvPDCvklijUmlmZMS5TzUOBgErs1dO1ym7gX3LUqidBff2x49qGQpWxjY9nqV0Q3yYI+93e0eweUZ3Bw==,iv:KcGmp4JgG/cQqLsHhNnUobB4eR+U6qr7boCqgWWZQKE=,tag:WCzH3WZzouPekTNUJ2PBlA==,type:str]
+password: ENC[AES256_GCM,data:8aPSUNxhkz0avA==,iv:6cU5IznGl9pH2DfN/9aO7Jled+LScc+udCb3fy48BEs=,tag:h3DAFTMXAmJ1PmaV0uCGLw==,type:str]
+traefik:
+    namespace: traefik
+    dashboard_hostname: dashboard.traefik
+    dashboard_users: ENC[AES256_GCM,data:urXn5+YwhIBAH6G5/LPx7F6Q3hUVaGot3tZqfBXg12p4I5FTl0JwF+55I1ngTXoFU/H9/D3Gd1a2HlVDDVjyeA==,iv:Grr+DJTCp4wkIO2Uw7qwJrXKUgzSCzPG5XR6c2TexiY=,tag:zf3N4ZzpPzsB1liKRqVDUQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-06-25T15:12:14Z'
-    mac: ENC[AES256_GCM,data:0JJnM3V+SDN6Y+TyjH5wbxnHrMCJYeb+v/c4AZBFeSoOgrr8gk9+Dn5hLGt3qar9nRAS2k1Lc4F5EZqaksU8hW0LeinWPMvQmu0RPw0wYTEtoKPtvKK1qrZncSC8xzfEgSndJlB+z5Lq4SqIimPpPV3u7K9KuUci6BkRDL++/SI=,iv:N+DFl21bGtv0D5AIZAt8BoDdAD8Xbk9TiekE61Qv6u0=,tag:HrNmtwPJhrJjRllrp4EVFQ==,type:str]
+    lastmodified: '2020-07-02T02:06:06Z'
+    mac: ENC[AES256_GCM,data:SjX7cU1wIsEiN1MdfMmFKOam/pNpyPBE/ah7fV+W+K12cgBJOzFiikr9jYkwPJDnV7TEdMtKiGnSgLhdiKvlJ1RfG8ssjh0AiIQlox2b2IOfAyQx5XPJSCgABZAxpJu3CvwNYAjZwPP5+RbAXq0Pj3VtXMhVbksXGY7ag3zWxzM=,iv:+eKbJBL0Nz30p6OxWVsZweM+HQxPSbfrE5ahexKR5Qs=,tag:q5JlGIU0IEE2Ev6521Mtsw==,type:str]
     pgp:
-    -   created_at: '2020-06-24T17:19:58Z'
+    -   created_at: '2020-07-02T01:55:31Z'
         enc: |-
             -----BEGIN PGP MESSAGE-----
 
-            wcFMA8+hman75/nUARAAheXMtq6KVNalZupzrwTd7FcZ4vHAs0TPgSKCAK6I9C8j
-            R0if1t/dqFwI1x5WjH5MWUOCR1LmsO9eVCfgb0armbuvRNgBOHlRYdSO+12SB93U
-            jkCJKmFRG+s2AMVZPBuR62s05bovDSKY+6Vx/gT5mjMasEoiG2Ev0T8jGom4Kz0Z
-            9MY0rQ7r+j6cn6oyMk+0mZfd0g8kRZHKPlyhsw6Spesj2V4EPuNbo/uO1C80/zRa
-            /2LqpzIG7x7hVmrUaY6Wjq1qa3E0dA9ctwOOOz5R2AikGJ/s4amfzRp2lb5VxRGx
-            i/iNvHKFPW9NywusyxO1j+Te4KbEplLeicUGhijqsX0F+KCnfdWEvoKpl2KiVOTg
-            HDF0mBHPFwL7wL0Y5nxIMj5bxEdFySXdOiDV1dsXaQQq7Rz+7Doqp0uYSlgEp6mO
-            hx1Jdpu5tp/1rxeLx5N6zCicF07iPQ/T8TNvWpeHbZVewWUBTril2ZSD0gVn4Zer
-            PfJnq8VBZOWjuQcHAxVH0ItqSltzh/jRp7rMc4HxOLka7t5BUPfOfgf6RXbxJU6H
-            5JBHti4Q0YLfvE+R6bicwK7WsS5CbQl3UTqfpvcSUK807Ql7LPcLnQV3gQr+OEbE
-            tKKbMQ1CP3f6Guohz8JyLDr5I9Pcvwqz09MWigFptWZJN8oOEcRfqBqWGCRO8AjS
-            4AHkzneNQmwGBUM+XoXu+kNDGOFkj+A44E3h8IDgIuKFvjiq4HjluXBFnLM2MkFd
-            mNcvzVyk9RxxJl2uFEKZ2onFqhd1dOPg5uSygE5BX9LNG1eaca5g+pVc4jjT6Gfh
-            MjsA
-            =gyxu
+            wcFMA8+hman75/nUARAAUf9GZOEenBa9pBQVL0uTjrnz2D3YtLEs4/NiwfF9K3Sl
+            74PmQRyojH5UI30olGPKzdSbotQHwCJJ96ICE6ne205RBoLFbbRqVmsNzd90AwxY
+            9MEvg9YHqZrurA4zuGo+K2T5/fUJUQHAhGPfSoyZi+hSfVGYlLbgP64zPkhsX/0f
+            BGc342P3KOsgFZOQ1xkt0swBgJc/9+7d91c5SZoUOGmqk04/ixIkx0fApk986aPK
+            AoPxI2GSUtwFAKMg3quN8OE1ClWAzq4BTgS1Y1r9J0F3B2toTPLYQ/vIT5dqq281
+            fB0qEpYfuadDsy7sOrhr3bp90Tcf53nhxO8HslWd1ZCI+p7zAdeS1Gp/Z9hZn4T6
+            Bq1ZfxY5pH7uXdsFIoVqHRGf88Yyf+bttPiC70gHMivJOuYScNeuP/zd4nXPAKxg
+            RZ98rmX3kdKUnQFMhBy5lDr8Y3pTKRhQGPaaspQXqi6iDkz57GqrO5Bxk1JyGB8T
+            adi7hA8o16EuFxagJtROUVskzRtq/xBfFZViegi4yHhR/Y5gettGZvJgqW/Mk8NJ
+            L5c9vQVi5CQdK3qF+oQherQg3v/P2DUCagK2vNMsMTu0FhiThMA3ha6YVwUAbCgD
+            13u4tqglnTY1Y0qiLJizXXJRICXHO9n69QQQBTPrvzLBNoFyGE5OktGRojiTq5/S
+            4AHk5DfIy545r7/zCvXQm8t4f+FkquAF4LDhVtLgceLcunCO4DnlayTz8FxfzGXQ
+            y0kTajmJTLZgwcQpIJ10gjstt/ehyHLgU+Qo3CpTC4q/mBuk3scN5zxH4p84J4fh
+            S2oA
+            =ECUM
             -----END PGP MESSAGE-----
         fp: 211FA1AE58F975F266A3E42E3CF239734CDBFD58
-    encrypted_regex: .*secret.*
+    encrypted_regex: (.*secret.*|.*password.*|.*users.*)
     version: 3.5.0

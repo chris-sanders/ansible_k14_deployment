@@ -182,10 +182,10 @@
 - name: Include site_file vars into the 'site_file' variable
   include_vars:
     file: "{{ stat_site_file.stat.path }}"
-    name: site_file
+    name: site_file_vars
 
-- name: debug site_file vars
-  debug: var=site_file
+- name: debug site_file_vars
+  debug: var=site_file_vars
   tags: [never, debug]
 
 

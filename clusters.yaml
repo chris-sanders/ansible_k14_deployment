@@ -9,11 +9,10 @@ all:
         ansible_python_interpreter: "{{ansible_playbook_python}}"
         site_file: site.yaml
 
-#metallb:
-#    hosts:
-#        site1:
-#        site2:
+metallb:
+    hosts:
+        site1:
+        site2:
 traefik:
     hosts:
         site1:
-

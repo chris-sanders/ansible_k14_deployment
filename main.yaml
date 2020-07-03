@@ -6,4 +6,7 @@
   gather_facts: no
   roles:
       - traefik
-
+- hosts: bitwarden
+  gather_facts: no
+  roles:
+      - bitwarden

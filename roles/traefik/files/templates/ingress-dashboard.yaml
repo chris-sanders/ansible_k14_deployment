@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: #@ "Host(`{}`)".format(data.values.traefik.dashboard_hostname)
+    - match: #@ "Host(`{}`)".format(data.values.traefik.dashboard.hostname)
       kind: Rule
       middlewares:
       - name: auth

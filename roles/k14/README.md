@@ -174,6 +174,18 @@ the final manifest folder. Each file created must be added to the role variable
 `k14_manifest_files` listed above. This variable is a list of additional file names that you
 have created in the templates folder that should be copied into the final manifest folder.
 
+Most likely you will want to create a namespace. Ex:
+```yaml
+#@ load("@ytt:data", "data")
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: #@ data.values.application.namespace
+```
+Including the above in `files/templates/namespace.yaml` and adding `namespace.yaml` to the
+list in `k14_manifest_files` will render it into the final manifest
+
 Secrets
 -------
 If your application role needs to create secrets create the file

@@ -3,4 +3,5 @@
 sops: False
 traefik:
     namespace: traefik
-    dashboard_hostname: dashboard.traefik
+    dashboard:
+        hostname: dashboard.traefik

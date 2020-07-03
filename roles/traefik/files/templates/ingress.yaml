@@ -26,6 +26,7 @@ metadata:
 spec:
   basicAuth:
     secret: authsecret
+#@ if hasattr(data.values.traefik, "ingress_routes"):
 #@ for app in data.values.traefik.ingress_routes:
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -44,4 +45,5 @@ spec:
         port: #@ app.service_port
         namespace: #@ app.namespace
   tls: {}
+#@ end
 #@ end

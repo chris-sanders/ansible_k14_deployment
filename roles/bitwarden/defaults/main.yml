@@ -3,5 +3,6 @@
 k14_app: bitwarden
 k14_helm_repo: ~/src/helm/helm-bitwarden_rs
 k14_helm_path: charts/bitwarden/
-# k14_manifest_files:
+k14_manifest_files:
+    - namespace.yaml
 

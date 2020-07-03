@@ -1,24 +1,28 @@
+---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: bitwarden-database-backup
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: latest
+          Type: resolved
+          URL: skeen/bitwarden_rs_backup:latest
+        URL: index.docker.io/skeen/bitwarden_rs_backup@sha256:941a470106cbf6ede1427f16f614e1d5ef5ae951dbcc930578ff71f6a7e1f2ff
   labels:
-    app.kubernetes.io/name: bitwarden
-    helm.sh/chart: bitwarden-0.1.1
     app.kubernetes.io/instance: bitwarden
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: bitwarden
+    helm.sh/chart: bitwarden-0.1.1
+  name: bitwarden-database-backup
 spec:
-  schedule: '* 3 * * *'
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: bitwarden-database-backup
-            image: skeen/bitwarden_rs_backup:latest
-            imagePullPolicy: Always
-            env:
+          - env:
             - name: SOURCE_DATABASE
               value: /bw-data/db.sqlite3
             - name: BACKUP_DATABASE
@@ -27,12 +31,16 @@ spec:
               value: "false"
             - name: TIMESTAMP_FILE
               value: /bw-backup/timestamp
+            image: index.docker.io/skeen/bitwarden_rs_backup@sha256:941a470106cbf6ede1427f16f614e1d5ef5ae951dbcc930578ff71f6a7e1f2ff
+            imagePullPolicy: Always
+            name: bitwarden-database-backup
+            resources: {}
             volumeMounts:
             - mountPath: /bw-data
               name: data-storage
             - mountPath: /bw-backup
               name: backup-storage
-            resources: {}
+          restartPolicy: OnFailure
           volumes:
           - name: data-storage
             persistentVolumeClaim:
@@ -40,4 +48,4 @@ spec:
           - name: backup-storage
             persistentVolumeClaim:
               claimName: bitwarden-backup-pv
-          restartPolicy: OnFailure
+  schedule: '* 3 * * *'

@@ -1,81 +1,42 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: traefik
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: 2.2.1
+          Type: resolved
+          URL: traefik:2.2.1
+        URL: index.docker.io/library/traefik@sha256:ad4442a6f88cf35266542588f13ae9984aa058a55a518a87876e48c160d19ee0
   labels:
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: traefik
     helm.sh/chart: traefik-8.8.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: traefik
+  name: traefik
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: traefik
       app.kubernetes.io/instance: traefik
+      app.kubernetes.io/name: traefik
   strategy:
-    type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
       annotations: null
       labels:
+        app.kubernetes.io/instance: traefik
+        app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: traefik
         helm.sh/chart: traefik-8.8.1
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/instance: traefik
     spec:
-      serviceAccountName: traefik
-      terminationGracePeriodSeconds: 60
-      hostNetwork: false
       containers:
-      - image: traefik:2.2.1
-        name: traefik
-        resources: null
-        readinessProbe:
-          httpGet:
-            path: /ping
-            port: 9000
-          failureThreshold: 1
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
-        livenessProbe:
-          httpGet:
-            path: /ping
-            port: 9000
-          failureThreshold: 3
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
-        ports:
-        - name: traefik
-          containerPort: 9000
-          protocol: TCP
-        - name: web
-          containerPort: 8000
-          protocol: TCP
-        - name: websecure
-          containerPort: 8443
-          protocol: TCP
-        securityContext:
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: true
-          runAsGroup: 65532
-          runAsNonRoot: true
-          runAsUser: 65532
-        volumeMounts:
-        - name: data
-          mountPath: /data
-        - name: tmp
-          mountPath: /tmp
-        args:
+      - args:
         - --global.checknewversion
         - --global.sendanonymoususage
         - --entryPoints.traefik.address=:9000/tcp
@@ -85,10 +46,57 @@ spec:
         - --ping=true
         - --providers.kubernetescrd
         - --providers.kubernetesingress
-      volumes:
-      - name: data
-        emptyDir: {}
-      - name: tmp
-        emptyDir: {}
+        image: index.docker.io/library/traefik@sha256:ad4442a6f88cf35266542588f13ae9984aa058a55a518a87876e48c160d19ee0
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ping
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        name: traefik
+        ports:
+        - containerPort: 9000
+          name: traefik
+          protocol: TCP
+        - containerPort: 8000
+          name: web
+          protocol: TCP
+        - containerPort: 8443
+          name: websecure
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 1
+          httpGet:
+            path: /ping
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        resources: null
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsGroup: 65532
+          runAsNonRoot: true
+          runAsUser: 65532
+        volumeMounts:
+        - mountPath: /data
+          name: data
+        - mountPath: /tmp
+          name: tmp
+      hostNetwork: false
       securityContext:
         fsGroup: 65532
+      serviceAccountName: traefik
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - emptyDir: {}
+        name: data
+      - emptyDir: {}
+        name: tmp

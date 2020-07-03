@@ -1,47 +1,55 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bitwarden
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: latest
+          Type: resolved
+          URL: bitwardenrs/server:latest
+        URL: index.docker.io/bitwardenrs/server@sha256:df20d55d00a8985d015389557184ee05aab7fe4d4ab6e8f02fecc66b02282243
   labels:
-    app.kubernetes.io/name: bitwarden
-    helm.sh/chart: bitwarden-0.1.1
     app.kubernetes.io/instance: bitwarden
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: bitwarden
+    helm.sh/chart: bitwarden-0.1.1
+  name: bitwarden
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: bitwarden
       app.kubernetes.io/instance: bitwarden
+      app.kubernetes.io/name: bitwarden
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: bitwarden
         app.kubernetes.io/instance: bitwarden
+        app.kubernetes.io/name: bitwarden
     spec:
       containers:
-      - name: bitwarden
-        image: bitwardenrs/server:latest
-        imagePullPolicy: IfNotPresent
-        envFrom:
+      - envFrom:
         - configMapRef:
             name: bitwarden-conf
-        ports:
-        - name: http
-          containerPort: 80
-          protocol: TCP
+        image: index.docker.io/bitwardenrs/server@sha256:df20d55d00a8985d015389557184ee05aab7fe4d4ab6e8f02fecc66b02282243
+        imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
             path: /
             port: http
+        name: bitwarden
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
         readinessProbe:
           httpGet:
             path: /
             port: http
+        resources: {}
         volumeMounts:
         - mountPath: /bw-data
           name: data-storage
-        resources: {}
       volumes:
       - name: data-storage
         persistentVolumeClaim:

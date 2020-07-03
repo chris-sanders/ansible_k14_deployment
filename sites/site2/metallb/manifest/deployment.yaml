@@ -1,68 +1,76 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: metallb-controller
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: 0.9.3-debian-10-r85
+          Type: resolved
+          URL: docker.io/bitnami/metallb-controller:0.9.3-debian-10-r85
+        URL: index.docker.io/bitnami/metallb-controller@sha256:3fc3892a8cf31297ae42e879fdd2d9ab1bd3879367a9512cd9e842d35b8d7e28
   labels:
-    app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.15
+    app.kubernetes.io/component: controller
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: metallb
+    helm.sh/chart: metallb-0.1.15
+  name: metallb-controller
 spec:
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app.kubernetes.io/name: metallb
-      app.kubernetes.io/instance: metallb
       app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: metallb
+      app.kubernetes.io/name: metallb
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: metallb
-        helm.sh/chart: metallb-0.1.15
+        app.kubernetes.io/component: controller
         app.kubernetes.io/instance: metallb
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/component: controller
+        app.kubernetes.io/name: metallb
+        helm.sh/chart: metallb-0.1.15
     spec:
-      serviceAccountName: metallb-controller
-      terminationGracePeriodSeconds: 0
-      nodeSelector:
-        kubernetes.io/os: linux
       containers:
-      - name: metallb-controller
-        image: docker.io/bitnami/metallb-controller:0.9.3-debian-10-r85
-        imagePullPolicy: IfNotPresent
-        args:
+      - args:
         - --port=7472
         - --config=metallb-config
-        ports:
-        - name: metrics
-          containerPort: 7472
+        image: index.docker.io/bitnami/metallb-controller@sha256:3fc3892a8cf31297ae42e879fdd2d9ab1bd3879367a9512cd9e842d35b8d7e28
+        imagePullPolicy: IfNotPresent
         livenessProbe:
+          failureThreshold: 3
           httpGet:
             path: /metrics
             port: metrics
           initialDelaySeconds: 10
           periodSeconds: 10
-          timeoutSeconds: 1
           successThreshold: 1
-          failureThreshold: 3
+          timeoutSeconds: 1
+        name: metallb-controller
+        ports:
+        - containerPort: 7472
+          name: metrics
         readinessProbe:
+          failureThreshold: 3
           httpGet:
             path: /metrics
             port: metrics
           initialDelaySeconds: 10
           periodSeconds: 10
-          timeoutSeconds: 1
           successThreshold: 1
-          failureThreshold: 3
+          timeoutSeconds: 1
         securityContext:
           allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
           capabilities:
             drop:
             - ALL
+          readOnlyRootFilesystem: true
+      nodeSelector:
+        kubernetes.io/os: linux
       securityContext:
-        runAsUser: 1001
         fsGroup: 1001
         runAsNonRoot: true
+        runAsUser: 1001
+      serviceAccountName: metallb-controller
+      terminationGracePeriodSeconds: 0

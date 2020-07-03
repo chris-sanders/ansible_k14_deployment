@@ -1,6 +1,6 @@
 #@ load("@ytt:overlay", "overlay")
 
-#@overlay/match by=overlay.subset({"kind": "Deployment"}),expects="1+"
+#@overlay/match by=overlay.subset({"kind": "Deployment"}),when="1+"
 ---
 metadata:
     #@overlay/remove

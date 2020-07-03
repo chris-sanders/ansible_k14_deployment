@@ -1,19 +1,20 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: bitwarden
   labels:
-    app.kubernetes.io/name: bitwarden
-    helm.sh/chart: bitwarden-0.1.1
     app.kubernetes.io/instance: bitwarden
     app.kubernetes.io/managed-by: Helm
-spec:
-  type: ClusterIP
-  ports:
-  - port: 80
-    targetPort: null
-    protocol: TCP
-    name: http
-  selector:
     app.kubernetes.io/name: bitwarden
+    helm.sh/chart: bitwarden-0.1.1
+  name: bitwarden
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: null
+  selector:
     app.kubernetes.io/instance: bitwarden
+    app.kubernetes.io/name: bitwarden
+  type: ClusterIP

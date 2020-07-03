@@ -1,12 +1,13 @@
+---
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: metallb-controller
   labels:
-    app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: metallb
+    helm.sh/chart: metallb-0.1.15
+  name: metallb-controller
 spec:
   allowPrivilegeEscalation: false
   allowedCapabilities: []
@@ -45,12 +46,12 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: metallb-speaker
   labels:
-    app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.15
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: metallb
+    helm.sh/chart: metallb-0.1.15
+  name: metallb-speaker
 spec:
   allowPrivilegeEscalation: false
   allowedCapabilities:

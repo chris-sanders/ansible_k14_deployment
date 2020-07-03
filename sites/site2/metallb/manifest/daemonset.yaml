@@ -1,39 +1,38 @@
+---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: metallb-speaker
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: 0.9.3-debian-10-r93
+          Type: resolved
+          URL: docker.io/bitnami/metallb-speaker:0.9.3-debian-10-r93
+        URL: index.docker.io/bitnami/metallb-speaker@sha256:9cf1ef17ff505871316c9489ae029f99a54ea9f834ede5b9eb0bce1a32d44348
   labels:
-    app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.15
+    app.kubernetes.io/component: speaker
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: speaker
+    app.kubernetes.io/name: metallb
+    helm.sh/chart: metallb-0.1.15
+  name: metallb-speaker
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: metallb
-      app.kubernetes.io/instance: metallb
       app.kubernetes.io/component: speaker
+      app.kubernetes.io/instance: metallb
+      app.kubernetes.io/name: metallb
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: metallb
-        helm.sh/chart: metallb-0.1.15
+        app.kubernetes.io/component: speaker
         app.kubernetes.io/instance: metallb
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/component: speaker
+        app.kubernetes.io/name: metallb
+        helm.sh/chart: metallb-0.1.15
     spec:
-      tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
-      serviceAccountName: metallb-speaker
-      terminationGracePeriodSeconds: 2
-      hostNetwork: true
       containers:
-      - name: metallb-speaker
-        image: docker.io/bitnami/metallb-speaker:0.9.3-debian-10-r93
-        imagePullPolicy: IfNotPresent
-        args:
+      - args:
         - --port=7472
         - --config=metallb-config
         env:
@@ -58,40 +57,49 @@ spec:
         - name: METALLB_ML_SECRET_KEY
           valueFrom:
             secretKeyRef:
-              name: metallb-memberlist
               key: secretkey
+              name: metallb-memberlist
         envFrom: null
-        ports:
-        - name: metrics
-          containerPort: 7472
+        image: index.docker.io/bitnami/metallb-speaker@sha256:9cf1ef17ff505871316c9489ae029f99a54ea9f834ede5b9eb0bce1a32d44348
+        imagePullPolicy: IfNotPresent
         livenessProbe:
+          failureThreshold: 3
           httpGet:
             path: /metrics
             port: metrics
           initialDelaySeconds: 10
           periodSeconds: 10
-          timeoutSeconds: 1
           successThreshold: 1
-          failureThreshold: 3
+          timeoutSeconds: 1
+        name: metallb-speaker
+        ports:
+        - containerPort: 7472
+          name: metrics
         readinessProbe:
+          failureThreshold: 3
           httpGet:
             path: /metrics
             port: metrics
           initialDelaySeconds: 10
           periodSeconds: 10
-          timeoutSeconds: 1
           successThreshold: 1
-          failureThreshold: 3
+          timeoutSeconds: 1
         securityContext:
-          runAsUser: 0
           allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
           capabilities:
-            drop:
-            - ALL
             add:
             - NET_ADMIN
             - NET_RAW
             - SYS_ADMIN
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsUser: 0
+      hostNetwork: true
       nodeSelector:
         kubernetes.io/os: linux
+      serviceAccountName: metallb-speaker
+      terminationGracePeriodSeconds: 2
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master

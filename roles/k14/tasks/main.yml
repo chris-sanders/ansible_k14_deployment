@@ -137,8 +137,19 @@
     path: "{{ ansible_parent_role_paths[0] }}/files/overlays/manifest.yaml"
   register: role_manifest_overlay
 
+- name: find manifest files
+  stat:
+      path: "{{ item }}" 
+  register: k14_manifest_list
+  with_fileglob: "{{ tmp_folder.path }}/helm/{{ k14_app }}/templates/*"
+
+- name: debug manifest_list
+  debug: var=k14_manifest_list
+  tags: [never,debug]
+
 - name: Apply manifest overlay
   shell: "{{ lookup('template', 'ytt-overlay.sh') }}"
+  loop: "{{ k14_manifest_list.results }}"
 
 - name: Assemble manifest
   shell: |

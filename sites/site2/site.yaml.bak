@@ -1,9 +1,0 @@
-#@data/values
-#@overlay/match missing_ok=True
-#@overlay/match-child-defaults missing_ok=True
----
-metallb:
-    namespace: metallb-home
-    secretkey: Shh it's a secrete
-    addresses:
-        - "10.10.10.1-10.10.10.10"

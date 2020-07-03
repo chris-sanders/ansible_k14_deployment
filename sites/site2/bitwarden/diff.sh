@@ -1,6 +1,6 @@
 # Deploy with secrets
-kapp deploy -a metallb \
---into-ns metallb \
+kapp deploy -a bitwarden \
+--into-ns bitwarden \
 -f manifest \
 -c \
 -f secrets

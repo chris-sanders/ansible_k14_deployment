@@ -1,0 +1,43 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: bitwarden-database-backup
+  labels:
+    app.kubernetes.io/name: bitwarden
+    helm.sh/chart: bitwarden-0.1.1
+    app.kubernetes.io/instance: bitwarden
+    app.kubernetes.io/managed-by: Helm
+spec:
+  schedule: '* 3 * * *'
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: bitwarden-database-backup
+            image: skeen/bitwarden_rs_backup:latest
+            imagePullPolicy: Always
+            env:
+            - name: SOURCE_DATABASE
+              value: /bw-data/db.sqlite3
+            - name: BACKUP_DATABASE
+              value: /bw-backup/backup.sqlite3
+            - name: TIMESTAMP_BACKUP
+              value: "false"
+            - name: TIMESTAMP_FILE
+              value: /bw-backup/timestamp
+            volumeMounts:
+            - mountPath: /bw-data
+              name: data-storage
+            - mountPath: /bw-backup
+              name: backup-storage
+            resources: {}
+          volumes:
+          - name: data-storage
+            persistentVolumeClaim:
+              claimName: bitwarden-pv
+          - name: backup-storage
+            persistentVolumeClaim:
+              claimName: bitwarden-backup-pv
+          restartPolicy: OnFailure

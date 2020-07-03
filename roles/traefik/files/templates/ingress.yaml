@@ -26,7 +26,7 @@ metadata:
 spec:
   basicAuth:
     secret: authsecret
-#@ for app in data.values.traefik.ingress:
+#@ for app in data.values.traefik.ingress_routes:
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bitwarden-conf
+  labels:
+    app.kubernetes.io/name: bitwarden
+    helm.sh/chart: bitwarden-0.1.1
+    app.kubernetes.io/instance: bitwarden
+    app.kubernetes.io/managed-by: Helm
+data:
+  ROCKET_PORT: "80"
+  SHOW_PASSWORD_HINTS: "false"
+  WEB_VAULT_ENABLED: "true"
+  DATA_FOLDER: /bw-data

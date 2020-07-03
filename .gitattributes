@@ -1,1 +1,2 @@
-# *.yaml diff=sopsdiffer
+sites/*/*/secrets/*.yaml diff=sopsdiffer
+sites/site.yaml diff=sopsdiffer

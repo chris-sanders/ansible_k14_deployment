@@ -1,0 +1,6 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"kind": "PersistentVolumeClaim"}),expects=2
+---
+#@overlay/remove
+status: {}

@@ -10,6 +10,7 @@ kapp deploy -a {{ k14_app }} \
 {% endif %}
 --into-ns {{ k14_app_namespace }} \
 -f manifest \
+-c \
 {%if k14_sops.found: %}
 -f -
 {% else: %}

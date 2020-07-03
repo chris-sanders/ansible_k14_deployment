@@ -1,0 +1,9 @@
+#@ load("@ytt:data", "data")
+---
+name: "helm-values"
+ingress:
+    enabled: #@ data.values.bitwarden.ingress
+deployment:
+    image:
+        repository: #@ data.values.bitwarden.repository
+        tag: #@ data.values.bitwarden.tag

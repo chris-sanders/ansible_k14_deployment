@@ -15,6 +15,7 @@ files to a cluster. The general work flow is:
  * Generate kubernetes objects from repository
  * Generate any additional supporting objects from application role
  * Apply user or application role overlay modifications to Helm files
+ * Resolves image references to their digest form (immutable)
  * Write files to site/application specific folder for review and deployment
 
 The process allows for multiple sites with site specific configuration as well as application
@@ -95,13 +96,14 @@ deployment artifacts would be called with:
 ansible-playbook -i inventory.yaml playbook.yaml
 ```
 
-Running this playbook would apply the workflow and generate an application folder for each
+Running this playbook would apply the work flow and generate an application folder for each
 site with the site specific settings ready for configuration management and deployment.
 
 Requirements
 ------------
 This role expects the following tools to be installed
  - ytt
+ - kbld
  - helm3
  - git
  - sops (only if using encrypted secrets)
@@ -113,7 +115,7 @@ documentation from the ytt project for details.
 Writing an Application Role
 ---------------------------
 The following sections describe how to write a role for a specific application using this
-role to perform most of the workflow.
+role to perform most of the work flow.
 
 Role Variables
 --------------

@@ -3,5 +3,6 @@
 sops: False
 traefik:
     namespace: traefik
+    create_namespace: True
     dashboard:
         hostname: dashboard.traefik

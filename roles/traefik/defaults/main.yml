@@ -2,6 +2,3 @@
 k14_app: traefik
 k14_helm_repo: https://github.com/containous/traefik-helm-chart
 k14_helm_path: traefik/
-k14_manifest_files:
-    - namespace.yaml
-    - ingress.yaml

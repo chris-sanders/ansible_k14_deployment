@@ -35,6 +35,14 @@
     mode: 0774
   register: app_folder
 
+- name: Remove existing folders
+  file:
+      path: "{{ item }}"
+      state: absent
+  loop:
+      - "{{ app_folder.path }}/manifest" 
+      - "{{ app_folder.path }}/secrets" 
+
 - name: Create manifest folder
   file:
     path: "{{ app_folder.path }}/manifest"
@@ -156,9 +164,9 @@
 
 - name: Assemble manifest
   shell: |
-      cp {{ tmp_folder.path }}/ytt/{{ item }} {{ app_folder.path }}/manifest/
-  loop: "{{ k14_manifest_files }}"
-  when: k14_manifest_files is defined
+      cp {{ item }} {{ app_folder.path }}/manifest/
+  with_fileglob: "{{ tmp_folder.path }}/ytt/*"
+  when: not item is search("helm-values.yaml")
 
 - name: Fix manifest permission
   shell: |

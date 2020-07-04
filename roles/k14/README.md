@@ -124,7 +124,6 @@ Set the role variables in the defaults/main.yml file of your application role.
  * k14_app: The name of the application.
  * k14_helm_repo: The URL for the git repo
  * k14_helm_path: Path within the helm_repo to the chart
- * k14_manifest_files: A list of files in addition to the Helm chart to deploy (see below)
 
 Main Task
 ---------
@@ -171,10 +170,8 @@ Other objects
 -------------
 Any additional objects you need to configure the application should be defined in the
 `files/templates` folder. Like `helm-values` ytt data can be used with `default-values` to
-customize the templates. Custom objects created in this way are not automatically copied into
-the final manifest folder. Each file created must be added to the role variable
-`k14_manifest_files` listed above. This variable is a list of additional file names that you
-have created in the templates folder that should be copied into the final manifest folder.
+customize the templates. Custom objects created in this way are automatically copied into
+the final manifest folder. 
 
 Most likely you will want to create a namespace. Ex:
 ```yaml
@@ -185,8 +182,7 @@ kind: Namespace
 metadata:
   name: #@ data.values.application.namespace
 ```
-Including the above in `files/templates/namespace.yaml` and adding `namespace.yaml` to the
-list in `k14_manifest_files` will render it into the final manifest
+Including the above in `files/templates/namespace.yaml` will render it into the final manifest.
 
 Secrets
 -------

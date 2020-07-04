@@ -11,12 +11,15 @@ spec:
   routes:
     - match: #@ "Host(`{}`)".format(data.values.traefik.dashboard.hostname)
       kind: Rule
+      #@ if data.values.traefik.dashboard.users:
       middlewares:
       - name: auth
+      #@ end
       services:
       - name: api@internal
         kind: TraefikService
   tls: {}
+#@ if data.values.traefik.dashboard.users:
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -26,6 +29,7 @@ metadata:
 spec:
   basicAuth:
     secret: authsecret
+#@ end
 #@ if hasattr(data.values.traefik, "ingress_routes"):
 #@ for app in data.values.traefik.ingress_routes:
 ---

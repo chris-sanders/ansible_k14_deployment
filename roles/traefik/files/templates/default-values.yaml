@@ -6,3 +6,4 @@ traefik:
     create_namespace: True
     dashboard:
         hostname: dashboard.traefik
+        users:

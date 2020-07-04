@@ -31,7 +31,7 @@ kapp`. Because the full deployment documents are present kubectl can be used wit
 preferred.
 
 ## Building
-To build a new version, updating after modifying configuration or simply pulling in changes
+To build a new version, updating after modifying configuration, or pull in changes
 from helm repositories run the main playbook with the provided cluster as the inventory.
 ```bash
 ansible-playbook -i cluster.yaml main.yaml

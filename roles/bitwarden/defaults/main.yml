@@ -1,6 +1,0 @@
----
-# defaults file for bitwarden
-k14_app: bitwarden
-k14_helm_repo: https://github.com/chris-sanders/helm-bitwarden_rs.git
-k14_helm_ref: helm3
-k14_helm_path: charts/bitwarden/

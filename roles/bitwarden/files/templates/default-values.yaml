@@ -1,8 +1,0 @@
-#@data/values
----
-bitwarden:
-    namespace: bitwarden
-    create_namespace: True
-    ingress: false
-    repository: bitwardenrs/server
-    tag: latest

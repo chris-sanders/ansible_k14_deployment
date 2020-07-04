@@ -7,3 +7,6 @@
 [submodule "roles/traefik"]
 	path = roles/traefik
 	url = git@github.com:chris-sanders/k14_traefik.git
+[submodule "roles/bitwarden"]
+	path = roles/bitwarden
+	url = git@github.com:chris-sanders/k14_bitwarden.git

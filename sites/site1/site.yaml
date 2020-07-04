@@ -1,13 +1,9 @@
 kapp:
     namespace: kapp
-#namespace: infra
-#create_namespace: false
 metallb:
     addresses:
     - 10.0.9.1-10.0.9.254
     secretkey: ENC[AES256_GCM,data:oi6KEiITSRyRE7eVMEBrVCWdvw78+NUvMEUegl1CN5mKTN1MU82zmztuCFvi9HIkSJJFmqV7UIE6jXaMFVWgaxMGLiUCbZwF8G4XZzJ6kSaH2bpyybL59AupihlsxsAxVqfxlQnogG2yGTr7JViWuZo5VkPA6eAZZyqZ2rN2ZuHadHcC62c2ZW8AOMgDXLjrFCpJYrVaexGdGUslce5DZAUkUlG+AMA4MpWTfQ==,iv:mzXvzeJKmvq85i0cPBgI09NU3jQmYQP3E9pp0GjXHbs=,tag:4JBkhpLz6clHTODcTdU5Tw==,type:str]
-#namespace: infra
-#create_namespace: false
 traefik:
     dashboard:
         hostname: dashboard.traefik
@@ -20,13 +16,12 @@ traefik:
         service_port: 80
 bitwarden:
     namespace: bitwarden
-    #create_namespace: false
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-07-04T16:10:31Z'
-    mac: ENC[AES256_GCM,data:nL/74FQXUFu07kuWkpZl3umOYYRUwculebHjemm2JF6b8EKdfcokGANpVkhRw16juBDZgh5NHkmtne6Su9ewdyQfpunb/aLokrbs33CxxJ3sJzHXhMjVUFpjJ4uqrUj1owtu6qaTKZVja/PHjc66/tM2ypltmWrpI8ElaeSBdVE=,iv:XOpCxxj7dihU/Ni4pdsKIrIF4RTd7aWlaOnLn2qgVwI=,tag:mej+UJNv3inzxOWAhODY1A==,type:str]
+    lastmodified: '2020-07-04T19:46:54Z'
+    mac: ENC[AES256_GCM,data:SCyQmSMHjfbhk8tJSRU3iU9V13ME2PIdS2itGuece0R93cC7e1a9FTaye9MJowMq/OHzUfGTL198bGtTRNZuEjOE3DpCFDf28vKsyy+ZdNrTg0cM3yMX+LSZf1JkLyKhtkJgRuMj5ENAtIHewSRsP+jENmEZIb6d0d2tuaWtuTw=,iv:SZarora7iQ2WHg5Hpx31pxD463gZREikI8OA+qQ75Xo=,tag:82quTHd1PFVhAtoGFJbLcA==,type:str]
     pgp:
     -   created_at: '2020-07-02T01:55:31Z'
         enc: |-

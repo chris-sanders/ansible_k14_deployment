@@ -3,3 +3,6 @@ metallb:
     secretkey: Shh it's a secrete
     addresses:
         - "10.10.10.1-10.10.10.10"
+traefik:
+    dashboard:
+        users: dHJhZWZpazokYXByMSR6M1BiVlpIVCR2RUtFdzEzdzlyZXZzbHpGSkh0UHgxCgo=

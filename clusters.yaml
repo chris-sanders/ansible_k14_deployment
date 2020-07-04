@@ -16,6 +16,7 @@ metallb:
 traefik:
     hosts:
         site1:
+        site2:
 bitwarden:
     hosts:
         site1:

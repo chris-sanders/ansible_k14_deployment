@@ -4,12 +4,12 @@ metallb:
     namespace: metallb
     addresses:
     - 10.0.9.1-10.0.9.254
-    secretkey: ENC[AES256_GCM,data:igAu4hwhmWg3I/jMQuhprpnJOq8RZ/XgKgyvPDCvklijUmlmZMS5TzUOBgErs1dO1ym7gX3LUqidBff2x49qGQpWxjY9nqV0Q3yYI+93e0eweUZ3Bw==,iv:KcGmp4JgG/cQqLsHhNnUobB4eR+U6qr7boCqgWWZQKE=,tag:WCzH3WZzouPekTNUJ2PBlA==,type:str]
+    secretkey: ENC[AES256_GCM,data:oi6KEiITSRyRE7eVMEBrVCWdvw78+NUvMEUegl1CN5mKTN1MU82zmztuCFvi9HIkSJJFmqV7UIE6jXaMFVWgaxMGLiUCbZwF8G4XZzJ6kSaH2bpyybL59AupihlsxsAxVqfxlQnogG2yGTr7JViWuZo5VkPA6eAZZyqZ2rN2ZuHadHcC62c2ZW8AOMgDXLjrFCpJYrVaexGdGUslce5DZAUkUlG+AMA4MpWTfQ==,iv:mzXvzeJKmvq85i0cPBgI09NU3jQmYQP3E9pp0GjXHbs=,tag:4JBkhpLz6clHTODcTdU5Tw==,type:str]
 traefik:
     namespace: traefik
     dashboard:
         hostname: dashboard.traefik
-        users: ENC[AES256_GCM,data:gGV8JiEF6185qIZhL6B0dM6RTH4sRYaUpBTajulyYLj2VtqGCrc0HkokewYo8+TofhjApPWf/c7XMWOWfsndjQ==,iv:4uDr32VQov8Ved59X2CEDlHOYicx6d2QiA8m7f5zoDY=,tag:otmU34lXaT8BRof9ti7GBQ==,type:str]
+        users: ENC[AES256_GCM,data:pSsBuIIQPr6XyxKx3iEaLsajUWXb15NaQd4efH0g8aPTNhsa/NjIP3b8edQzmGR5yN1ddJjpzqM56qT482+Tlw==,iv:jKGi2SfyGvpDAXM87rAxKEKeKxUao2QVnJIlf7pE8eQ=,tag:C4P/1HtQUigguPT9Ft938Q==,type:str]
     ingress_routes:
     -   name: bitwarden
         uri: bitwarden.traefik
@@ -22,8 +22,8 @@ sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-07-03T18:01:07Z'
-    mac: ENC[AES256_GCM,data:eLBAiglLTFmrNHGJ8/Qot3rndOl/9YMNjb1PdgtoRK4H0fYZLTosHXYq8blwGnArrXDXQQF3LLHFIsmA3xQpxpVRqBBrxY/+EeL2WPFn4X9SuK7o0jn4/MybYR91Wjuq3c79Lu3QVGAfdmi5fG0rq57GjSv7uHnK/ZR3mWn44ks=,iv:FVMvfGr034k1kErQnzam+OSPylE/XlCQrj4mXMMe8Zc=,tag:umzQWAN9Ww6IcSK/ji6TIQ==,type:str]
+    lastmodified: '2020-07-03T23:38:13Z'
+    mac: ENC[AES256_GCM,data:E4D3fj2Eblfal8DjqfHWsGR8oUGtf6gCXYrnCSZwfCRLuUw+tGcP9+h9pq7zZkDrHU9urJ6CcuATgBQEigCS+QbBVavPueEmR39UQ6/EPQUsLa227lGvLyhW6HQZ7ytjSVAuZrH029phf5SpBSkzu3XbeoJOL5XB1cQCe74rfuM=,iv:JCciXdgi2geV1WMjq20o72+Z28+A9i9NmcqUMeA9H/U=,tag:a1S59TTIFnh0N0iCg5Xn1Q==,type:str]
     pgp:
     -   created_at: '2020-07-02T01:55:31Z'
         enc: |-

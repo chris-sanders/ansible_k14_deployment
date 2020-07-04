@@ -141,7 +141,9 @@
   stat:
       path: "{{ item }}" 
   register: k14_manifest_list
-  with_fileglob: "{{ tmp_folder.path }}/helm/{{ k14_app }}/templates/*"
+  with_filetree: "{{ tmp_folder.path }}/helm/{{ k14_app }}/templates"
+  #when: item.state == 'file'
+  #with_fileglob: "{{ tmp_folder.path }}/helm/{{ k14_app }}/templates/*"
 
 - name: debug manifest_list
   debug: var=k14_manifest_list
@@ -150,6 +152,7 @@
 - name: Apply manifest overlay
   shell: "{{ lookup('template', 'ytt-overlay.sh') }}"
   loop: "{{ k14_manifest_list.results }}"
+  when: item.item.state == 'file'
 
 - name: Assemble manifest
   shell: |

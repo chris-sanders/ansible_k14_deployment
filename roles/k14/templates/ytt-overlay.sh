@@ -1,5 +1,5 @@
-{% set filename = item.stat.path.split('/')[-1] %}
-ytt -f {{ tmp_folder.path }}/helm/{{ k14_app }}/templates/{{ filename }} \
+{% set filename = item.item.src.split('/')[-1] %}
+ytt -f {{ item.item.src }} \
 {% if manifest_overlay.stat.exists: %}
     -f {{ manifest_overlay.stat.path }} \
 {% endif %}

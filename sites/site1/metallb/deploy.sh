@@ -2,7 +2,7 @@
 sops -d secrets/secrets.yaml | \
 kapp deploy -a metallb \
 -n kapp \
---into-ns metallb \
+--into-ns infra \
 -f manifest \
 -y \
 -f -

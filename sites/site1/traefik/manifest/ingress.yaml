@@ -2,7 +2,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: traefik-tls-dashboard
-  namespace: traefik
+  namespace: infra
 spec:
   entryPoints:
   - websecure
@@ -20,7 +20,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: auth
-  namespace: traefik
+  namespace: infra
 spec:
   basicAuth:
     secret: authsecret
@@ -29,7 +29,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: traefik-tls-bitwarden
-  namespace: bitwarden
+  namespace: apps
 spec:
   entryPoints:
   - websecure
@@ -39,5 +39,5 @@ spec:
     services:
     - name: bitwarden
       port: 80
-      namespace: bitwarden
+      namespace: apps
   tls: {}

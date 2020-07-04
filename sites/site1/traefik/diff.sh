@@ -2,7 +2,7 @@
 sops -d secrets/secrets.yaml | \
 kapp deploy -a traefik \
 -n kapp \
---into-ns traefik \
+--into-ns infra \
 -f manifest \
 -c \
 -f -

@@ -4,7 +4,7 @@ metadata:
   labels:
     name: metallb-config
   name: metallb-config
-  namespace: metallb
+  namespace: infra
 data:
   config: |
     address-pools:

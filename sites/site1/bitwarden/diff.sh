@@ -2,7 +2,7 @@
 sops -d secrets/secrets.yaml | \
 kapp deploy -a bitwarden \
 -n kapp \
---into-ns bitwarden \
+--into-ns apps \
 -f manifest \
 -c \
 -f -

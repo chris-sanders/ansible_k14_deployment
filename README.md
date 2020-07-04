@@ -21,14 +21,14 @@ Each site and application folder has a script `deploy.sh` for deploying the appl
 `diff.sh` which just prints any changes that would be deployed. The current configuration is
 expecting the namesapce `kapp` to exist for storing application deployment history, it must be
 created prior to using the current configurations. After that the applications will deploy
-from their scripts, each application creats it's own namespace which is created as part of the
+from their scripts, each application creates it's own namespace which is created as part of the
 deployment.
 
 ## Deleting
 Because the deployment uses kapp to deploy you can get a list of applications with `kapp list
 -n kapp` or remove an application and everything it created with `kapp delete -a app-name -n
-kapp`. Because the fully deployment documents are present kubectl can be used without kapp if
-prefered.
+kapp`. Because the full deployment documents are present kubectl can be used without kapp if
+preferred.
 
 ## Building
 To build a new version, updating after modifying configuration or simply pulling in changes
@@ -39,7 +39,7 @@ ansible-playbook -i cluster.yaml main.yaml
 
 ## Submodules
 [ansible_k14][ansible_k14]: This is the role that does most of the work and describes the work
-flow for this deployment processes. The intention is to revision the configuraiton as well as
+flow for this deployment processes. The intention is to revision the configuration as well as
 the final output so that each commit contains a full diff of what changed. See the ansible_k14
 repository for more details.
 

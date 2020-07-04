@@ -1,4 +1,0 @@
-#@ load("@ytt:data", "data")
----
-name: "helm-values"
-existingConfigMap: #@ data.values.metallb.config_name

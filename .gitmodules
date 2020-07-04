@@ -1,3 +1,6 @@
 [submodule "roles/k14"]
 	path = roles/k14
 	url = git@github.com:chris-sanders/ansible_k14.git
+[submodule "roles/metallb"]
+	path = roles/metallb
+	url = git@github.com:chris-sanders/k14_metallb.git

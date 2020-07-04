@@ -4,3 +4,6 @@
 [submodule "roles/metallb"]
 	path = roles/metallb
 	url = git@github.com:chris-sanders/k14_metallb.git
+[submodule "roles/traefik"]
+	path = roles/traefik
+	url = git@github.com:chris-sanders/k14_traefik.git

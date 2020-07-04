@@ -1,32 +1,32 @@
 kapp:
     namespace: kapp
+#namespace: infra
+#create_namespace: false
 metallb:
-    namespace: infra
-    create_namespace: false
     addresses:
     - 10.0.9.1-10.0.9.254
     secretkey: ENC[AES256_GCM,data:oi6KEiITSRyRE7eVMEBrVCWdvw78+NUvMEUegl1CN5mKTN1MU82zmztuCFvi9HIkSJJFmqV7UIE6jXaMFVWgaxMGLiUCbZwF8G4XZzJ6kSaH2bpyybL59AupihlsxsAxVqfxlQnogG2yGTr7JViWuZo5VkPA6eAZZyqZ2rN2ZuHadHcC62c2ZW8AOMgDXLjrFCpJYrVaexGdGUslce5DZAUkUlG+AMA4MpWTfQ==,iv:mzXvzeJKmvq85i0cPBgI09NU3jQmYQP3E9pp0GjXHbs=,tag:4JBkhpLz6clHTODcTdU5Tw==,type:str]
+#namespace: infra
+#create_namespace: false
 traefik:
-    namespace: infra
-    create_namespace: false
     dashboard:
         hostname: dashboard.traefik
         users: ENC[AES256_GCM,data:pSsBuIIQPr6XyxKx3iEaLsajUWXb15NaQd4efH0g8aPTNhsa/NjIP3b8edQzmGR5yN1ddJjpzqM56qT482+Tlw==,iv:jKGi2SfyGvpDAXM87rAxKEKeKxUao2QVnJIlf7pE8eQ=,tag:C4P/1HtQUigguPT9Ft938Q==,type:str]
     ingress_routes:
     -   name: bitwarden
         uri: bitwarden.traefik
-        namespace: apps
+        namespace: bitwarden
         service_name: bitwarden
         service_port: 80
 bitwarden:
-    namespace: apps
-    create_namespace: false
+    namespace: bitwarden
+    #create_namespace: false
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-07-04T16:05:01Z'
-    mac: ENC[AES256_GCM,data:lQHahi5E00o2OPgg0p4FRREtv/kKDn0RNoDjqoJONdwIApnktNeEn0045tAgoPLpadYmtSfHq6XyC/wVggFioh5mb8MktQgIpmol9CSjGuGz8Bm1xyNUZjkQb85x6fG2fiEnQoYa1WSXyEhiLRRZzH+LqaFrCdVgtC1ntF79KVs=,iv:in4FUfP9Svc+OGhaP/ERSukuz0sJTHs4vvoDVv2ZCpc=,tag:2w6KjdNJa3j3n8e2ajErZw==,type:str]
+    lastmodified: '2020-07-04T16:10:31Z'
+    mac: ENC[AES256_GCM,data:nL/74FQXUFu07kuWkpZl3umOYYRUwculebHjemm2JF6b8EKdfcokGANpVkhRw16juBDZgh5NHkmtne6Su9ewdyQfpunb/aLokrbs33CxxJ3sJzHXhMjVUFpjJ4uqrUj1owtu6qaTKZVja/PHjc66/tM2ypltmWrpI8ElaeSBdVE=,iv:XOpCxxj7dihU/Ni4pdsKIrIF4RTd7aWlaOnLn2qgVwI=,tag:mej+UJNv3inzxOWAhODY1A==,type:str]
     pgp:
     -   created_at: '2020-07-02T01:55:31Z'
         enc: |-

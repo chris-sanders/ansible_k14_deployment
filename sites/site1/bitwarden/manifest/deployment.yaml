@@ -8,7 +8,7 @@ metadata:
         - Tag: latest
           Type: resolved
           URL: bitwardenrs/server:latest
-        URL: index.docker.io/bitwardenrs/server@sha256:df20d55d00a8985d015389557184ee05aab7fe4d4ab6e8f02fecc66b02282243
+        URL: index.docker.io/bitwardenrs/server@sha256:a534e000c8a8cb1a8f47245ea4cfba044e7790aec8a8f20cbef3dd07c94cabde
   labels:
     app.kubernetes.io/instance: bitwarden
     app.kubernetes.io/managed-by: Helm
@@ -31,7 +31,7 @@ spec:
       - envFrom:
         - configMapRef:
             name: bitwarden-conf
-        image: index.docker.io/bitwardenrs/server@sha256:df20d55d00a8985d015389557184ee05aab7fe4d4ab6e8f02fecc66b02282243
+        image: index.docker.io/bitwardenrs/server@sha256:a534e000c8a8cb1a8f47245ea4cfba044e7790aec8a8f20cbef3dd07c94cabde
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:

@@ -5,15 +5,15 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: 2.2.1
+        - Tag: 2.2.5
           Type: resolved
-          URL: traefik:2.2.1
-        URL: index.docker.io/library/traefik@sha256:ad4442a6f88cf35266542588f13ae9984aa058a55a518a87876e48c160d19ee0
+          URL: traefik:2.2.5
+        URL: index.docker.io/library/traefik@sha256:9e49ebc167440e6e0cb506ffe342c7fa61ed255a946a6d968122ae3a46012978
   labels:
     app.kubernetes.io/instance: traefik
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: traefik
-    helm.sh/chart: traefik-8.8.1
+    helm.sh/chart: traefik-8.9.1
   name: traefik
 spec:
   replicas: 1
@@ -33,7 +33,7 @@ spec:
         app.kubernetes.io/instance: traefik
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: traefik
-        helm.sh/chart: traefik-8.8.1
+        helm.sh/chart: traefik-8.9.1
     spec:
       containers:
       - args:
@@ -46,7 +46,7 @@ spec:
         - --ping=true
         - --providers.kubernetescrd
         - --providers.kubernetesingress
-        image: index.docker.io/library/traefik@sha256:ad4442a6f88cf35266542588f13ae9984aa058a55a518a87876e48c160d19ee0
+        image: index.docker.io/library/traefik@sha256:9e49ebc167440e6e0cb506ffe342c7fa61ed255a946a6d968122ae3a46012978
         livenessProbe:
           failureThreshold: 3
           httpGet:

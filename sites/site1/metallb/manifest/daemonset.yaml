@@ -5,16 +5,16 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: 0.9.3-debian-10-r93
+        - Tag: 0.9.3-debian-10-r105
           Type: resolved
-          URL: docker.io/bitnami/metallb-speaker:0.9.3-debian-10-r93
-        URL: index.docker.io/bitnami/metallb-speaker@sha256:9cf1ef17ff505871316c9489ae029f99a54ea9f834ede5b9eb0bce1a32d44348
+          URL: docker.io/bitnami/metallb-speaker:0.9.3-debian-10-r105
+        URL: index.docker.io/bitnami/metallb-speaker@sha256:bf49e45d1937f026fa4595756c2d2f73318f0879b15f9b0901a412f566ac5466
   labels:
     app.kubernetes.io/component: speaker
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.15
+    helm.sh/chart: metallb-0.1.17
   name: metallb-speaker
 spec:
   selector:
@@ -29,7 +29,7 @@ spec:
         app.kubernetes.io/instance: metallb
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: metallb
-        helm.sh/chart: metallb-0.1.15
+        helm.sh/chart: metallb-0.1.17
     spec:
       containers:
       - args:
@@ -60,7 +60,7 @@ spec:
               key: secretkey
               name: metallb-memberlist
         envFrom: null
-        image: index.docker.io/bitnami/metallb-speaker@sha256:9cf1ef17ff505871316c9489ae029f99a54ea9f834ede5b9eb0bce1a32d44348
+        image: index.docker.io/bitnami/metallb-speaker@sha256:bf49e45d1937f026fa4595756c2d2f73318f0879b15f9b0901a412f566ac5466
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3

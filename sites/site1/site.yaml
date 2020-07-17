@@ -16,12 +16,14 @@ traefik:
         service_port: 80
 bitwarden:
     namespace: bitwarden
+rancher:
+    hostname: rancher.traefik
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-07-04T19:46:54Z'
-    mac: ENC[AES256_GCM,data:SCyQmSMHjfbhk8tJSRU3iU9V13ME2PIdS2itGuece0R93cC7e1a9FTaye9MJowMq/OHzUfGTL198bGtTRNZuEjOE3DpCFDf28vKsyy+ZdNrTg0cM3yMX+LSZf1JkLyKhtkJgRuMj5ENAtIHewSRsP+jENmEZIb6d0d2tuaWtuTw=,iv:SZarora7iQ2WHg5Hpx31pxD463gZREikI8OA+qQ75Xo=,tag:82quTHd1PFVhAtoGFJbLcA==,type:str]
+    lastmodified: '2020-07-11T16:38:14Z'
+    mac: ENC[AES256_GCM,data:nJXilhMtWs/P8KTAkzTuXn6W2s2hdPseow1cZm54N3D4R0Iw8L7aWNjx4FUJgR177CGE26NQpPGVoLhNBY5glhd/EGXGa87eosIoY0gxFOOR/TvjT4STDgmy/Qiz2B+V7lzPcJUHvQoeRZZSrrsjANmVkfTk5FHNzL8E0WYbumM=,iv:Upn3rzR8uiNsO709EubMWh47bhNbXAwzTy2/8TTl8jo=,tag:lYfn1eaVsKucye4UKrreGA==,type:str]
     pgp:
     -   created_at: '2020-07-02T01:55:31Z'
         enc: |-

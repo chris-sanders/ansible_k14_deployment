@@ -21,3 +21,7 @@ bitwarden:
     hosts:
         site1:
         site2:
+
+rancher:
+    hosts:
+        site1:

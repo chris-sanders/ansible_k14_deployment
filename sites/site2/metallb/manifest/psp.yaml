@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.15
+    helm.sh/chart: metallb-0.1.17
   name: metallb-controller
 spec:
   allowPrivilegeEscalation: false
@@ -50,7 +50,7 @@ metadata:
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.15
+    helm.sh/chart: metallb-0.1.17
   name: metallb-speaker
 spec:
   allowPrivilegeEscalation: false

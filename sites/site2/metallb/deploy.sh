@@ -1,6 +1,8 @@
-# Deploy with secrets
+# Decrypt secrets and deploy
+sops -d secrets/secrets.yaml | \
 kapp deploy -a metallb \
---into-ns metallb-site2 \
+-n kapp \
+--into-ns metallb \
 -f manifest \
 -y \
--f secrets
+-f -

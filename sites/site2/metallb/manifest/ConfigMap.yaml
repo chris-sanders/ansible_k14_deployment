@@ -4,11 +4,11 @@ metadata:
   labels:
     name: metallb-config
   name: metallb-config
-  namespace: metallb-site2
+  namespace: metallb
 data:
   config: |
     address-pools:
     - name: default
       protocol: layer2
       addresses:
-      - 10.10.10.1-10.10.10.10
+      - 10.0.9.20-10.0.9.29

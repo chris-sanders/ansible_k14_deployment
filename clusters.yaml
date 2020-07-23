@@ -21,3 +21,6 @@ bitwarden:
     hosts:
         site1:
         site2:
+ceph-csi-rbd:
+    hosts:
+        site1:

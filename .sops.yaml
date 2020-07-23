@@ -1,3 +1,3 @@
 creation_rules:
-  - encrypted_regex: '(.*secret.*|.*password.*|.*users.*)'
+  - encrypted_regex: '(.*secret.*|.*password.*|.*user.*)'
     pgp: "211FA1AE58F975F266A3E42E3CF239734CDBFD58"

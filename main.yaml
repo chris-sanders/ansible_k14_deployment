@@ -10,3 +10,7 @@
   gather_facts: no
   roles:
       - bitwarden
+- hosts: ceph-csi-rbd
+  gather_facts: no
+  roles:
+      - ceph-csi-rbd

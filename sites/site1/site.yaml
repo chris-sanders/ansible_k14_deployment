@@ -17,28 +17,24 @@ traefik:
 bitwarden:
     namespace: bitwarden
 ceph_csi_rbd:
-    cluster_id: testID
+    cluster_id: c28884d0-cab2-11ea-a70f-00163ed49eca
     mons:
-    - mon1
-    - mon2
-    - mon3
-    user_id: ENC[AES256_GCM,data:6syQzNvnRMDUYHFk,iv:bInvyO43wjuHndJ2kwGQbeeOgLPpHGuPdF8fN7bPOeg=,tag:IENZ7g99L9LBwPeYFeO8oQ==,type:str]
-    user_key: ENC[AES256_GCM,data:Nll1e1jUpiR4Bk8kNw==,iv:E9OThI0L57agD6RAgMMaZcFE5zIUetpmKKh6R1HjwSQ=,tag:htG8C9lWQqDgld1u2arLDw==,type:str]
+    - 10.0.8.105
+    - 10.0.8.33
+    - 10.0.8.62
+    user_id: ENC[AES256_GCM,data:bHp+X6A=,iv:VgRPsAlh6DO6k9Cvp23rjXLvJdIKG2RbhLwg0IClMC8=,tag:OyS+rNganKoB6WH6Pz5lsg==,type:str]
+    user_key: ENC[AES256_GCM,data:iIk2BYBkdV8B4HzfIYLTvh3yluTzGpRFfx8MJMyTn1w6us0KGRDJeA==,iv:WG5ZzBK+CllYOf6xxWwUSNb8U17JBzu2aeG+eEWNdfY=,tag:oHtkqrlVuD3hXQ2WUzhSdA==,type:str]
     storage_classes:
     -   name: csi-rbd-sc
-        pool: xfs-pool
+        pool: rbd
         default: true
         fstype: xfs
-    -   name: csi-rbd-test
-        pool: replicated-pool
-        data_pool: erasure-pool
-        fstype: test-fs
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-07-22T03:57:32Z'
-    mac: ENC[AES256_GCM,data:AzbRcY1dKoF8eq/tIi5CWHNJFsF3p+kTeVXRQGa/wvBcODzAIWbfIwhoW8KOtKjd9EwI0Dy8zldZBNSIQaYXb8UzH6x0swqI7325EJmhggQtfIkTrebE3mQ/TJoHRW2U7wksdhHQiV/cLaa2zQAyvp3K+gKoY3iPYIzmNvKnc7Q=,iv:2B43tUjZPjxufFPqnFS7Pztnic8mW/LFO7thFMHxsAM=,tag:D5tX58GOB8KQrkY46eshXQ==,type:str]
+    lastmodified: '2020-07-23T02:22:02Z'
+    mac: ENC[AES256_GCM,data:qbS0o5G6AL8Pb0ZooS/2n82EdPZn41CyleaMFk3zeGby/W0LeffhLyx/NzLSIDsUv7OmbrF5BKQ9QxYsPJAMo9md/2i2AGkDE94ajemHiudG1ek72FV7oJpqViPvdDpcSPWw89SE6vkypELzUYiXLTV6PtvB8HsRK5B90/hal58=,iv:Au8ntm7LcZ4XRZwTYY7Be9QTEGoZvBZafkyfRjzugbI=,tag:LUXLr6VQfk48KKzGk81nvg==,type:str]
     pgp:
     -   created_at: '2020-07-22T03:01:24Z'
         enc: |-

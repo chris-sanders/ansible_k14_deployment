@@ -1,0 +1,219 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: v2.1.2
+          Type: resolved
+          URL: quay.io/cephcsi/cephcsi:v2.1.2
+        URL: quay.io/cephcsi/cephcsi@sha256:a5d30fb10a7dfd6db4481a7fbd7513b2b2ea3b2084e6cbcc880036b095d4061e
+      - Metas:
+        - Tag: v2.1.2
+          Type: resolved
+          URL: quay.io/cephcsi/cephcsi:v2.1.2
+        URL: quay.io/cephcsi/cephcsi@sha256:a5d30fb10a7dfd6db4481a7fbd7513b2b2ea3b2084e6cbcc880036b095d4061e
+      - Metas:
+        - Tag: v2.1.1
+          Type: resolved
+          URL: quay.io/k8scsi/csi-attacher:v2.1.1
+        URL: quay.io/k8scsi/csi-attacher@sha256:4bfcf54fde2be69ccf122bc19dd10389013292b49e7d8a57d1eaa013c3672a91
+      - Metas:
+        - Tag: v1.4.0
+          Type: resolved
+          URL: quay.io/k8scsi/csi-provisioner:v1.4.0
+        URL: quay.io/k8scsi/csi-provisioner@sha256:3a14f801f330d5eacee11f544d2c2c7cc4a733835e25b59887053358108cea69
+      - Metas:
+        - Tag: v0.5.0
+          Type: resolved
+          URL: quay.io/k8scsi/csi-resizer:v0.5.0
+        URL: quay.io/k8scsi/csi-resizer@sha256:6c6a0332693a7c456378f6abd2bb40611826c1e1a733cadbdae2daab3125b71c
+      - Metas:
+        - Tag: v1.2.2
+          Type: resolved
+          URL: quay.io/k8scsi/csi-snapshotter:v1.2.2
+        URL: quay.io/k8scsi/csi-snapshotter@sha256:fbef4d21ec79c9c5aced2e0e0396b9272e69ffe4cc718c3602ae6a466f682d41
+  labels:
+    app: ceph-csi-rbd
+    chart: ceph-csi-rbd-2.1.2-canary
+    component: provisioner
+    heritage: Helm
+    release: ceph-csi-rbd
+  name: ceph-csi-rbd-provisioner
+  namespace: ceph-csi-rbd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ceph-csi-rbd
+      component: provisioner
+      release: ceph-csi-rbd
+  template:
+    metadata:
+      labels:
+        app: ceph-csi-rbd
+        chart: ceph-csi-rbd-2.1.2-canary
+        component: provisioner
+        heritage: Helm
+        release: ceph-csi-rbd
+    spec:
+      containers:
+      - args:
+        - --csi-address=$(ADDRESS)
+        - --v=5
+        - --timeout=60s
+        - --enable-leader-election=true
+        - --leader-election-type=leases
+        - --retry-interval-start=500ms
+        env:
+        - name: ADDRESS
+          value: unix:///csi/csi-provisioner.sock
+        image: quay.io/k8scsi/csi-provisioner@sha256:3a14f801f330d5eacee11f544d2c2c7cc4a733835e25b59887053358108cea69
+        imagePullPolicy: IfNotPresent
+        name: csi-provisioner
+        resources: {}
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+      - args:
+        - --v=5
+        - --csi-address=$(ADDRESS)
+        - --csiTimeout=60s
+        - --leader-election
+        env:
+        - name: ADDRESS
+          value: unix:///csi/csi-provisioner.sock
+        image: quay.io/k8scsi/csi-resizer@sha256:6c6a0332693a7c456378f6abd2bb40611826c1e1a733cadbdae2daab3125b71c
+        imagePullPolicy: IfNotPresent
+        name: csi-resizer
+        resources: {}
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+      - args:
+        - --csi-address=$(ADDRESS)
+        - --v=5
+        - --timeout=60s
+        - --leader-election=true
+        env:
+        - name: ADDRESS
+          value: unix:///csi/csi-provisioner.sock
+        image: quay.io/k8scsi/csi-snapshotter@sha256:fbef4d21ec79c9c5aced2e0e0396b9272e69ffe4cc718c3602ae6a466f682d41
+        imagePullPolicy: IfNotPresent
+        name: csi-snapshotter
+        resources: {}
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+      - args:
+        - --v=5
+        - --csi-address=$(ADDRESS)
+        - --leader-election=true
+        env:
+        - name: ADDRESS
+          value: unix:///csi/csi-provisioner.sock
+        image: quay.io/k8scsi/csi-attacher@sha256:4bfcf54fde2be69ccf122bc19dd10389013292b49e7d8a57d1eaa013c3672a91
+        imagePullPolicy: IfNotPresent
+        name: csi-attacher
+        resources: {}
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+      - args:
+        - --nodeid=$(NODE_ID)
+        - --type=rbd
+        - --controllerserver=true
+        - --pidlimit=-1
+        - --endpoint=$(CSI_ENDPOINT)
+        - --v=5
+        - --drivername=$(DRIVER_NAME)
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: DRIVER_NAME
+          value: rbd.csi.ceph.com
+        - name: NODE_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CSI_ENDPOINT
+          value: unix:///csi/csi-provisioner.sock
+        image: quay.io/cephcsi/cephcsi@sha256:a5d30fb10a7dfd6db4481a7fbd7513b2b2ea3b2084e6cbcc880036b095d4061e
+        imagePullPolicy: IfNotPresent
+        name: csi-rbdplugin
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+          privileged: true
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+        - mountPath: /dev
+          name: host-dev
+        - mountPath: /sys
+          name: host-sys
+        - mountPath: /lib/modules
+          name: lib-modules
+          readOnly: true
+        - mountPath: /etc/ceph-csi-config/
+          name: ceph-csi-config
+        - mountPath: /etc/ceph-csi-encryption-kms-config/
+          name: ceph-csi-encryption-kms-config
+        - mountPath: /tmp/csi/keys
+          name: keys-tmp-dir
+      - args:
+        - --type=liveness
+        - --endpoint=$(CSI_ENDPOINT)
+        - --metricsport=8080
+        - --metricspath=/metrics
+        - --polltime=60s
+        - --timeout=3s
+        env:
+        - name: CSI_ENDPOINT
+          value: unix:///csi/csi-provisioner.sock
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay.io/cephcsi/cephcsi@sha256:a5d30fb10a7dfd6db4481a7fbd7513b2b2ea3b2084e6cbcc880036b095d4061e
+        imagePullPolicy: IfNotPresent
+        name: liveness-prometheus
+        resources: {}
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+      serviceAccountName: ceph-csi-rbd-provisioner
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: socket-dir
+      - hostPath:
+          path: /dev
+        name: host-dev
+      - hostPath:
+          path: /sys
+        name: host-sys
+      - hostPath:
+          path: /lib/modules
+        name: lib-modules
+      - configMap:
+          name: ceph-csi-config-rbd
+        name: ceph-csi-config
+      - configMap:
+          name: ceph-csi-encryption-kms-config
+        name: ceph-csi-encryption-kms-config
+      - emptyDir:
+          medium: Memory
+        name: keys-tmp-dir

@@ -165,9 +165,13 @@ spec:
           path: /var/snap/microk8s/common/var/lib/kubelet/plugins_registry
           type: Directory
         name: registration-dir
-      - hostPath: /var/snap/microk8s/common/var/lib/kubelet/plugins
+      - hostPath:
+          path: /var/snap/microk8s/common/var/lib/kubelet/plugins
+          type: Directory
         name: plugin-dir
-      - hostPath: /var/snap/microk8s/common/var/lib/kubelet/pods
+      - hostPath:
+          path: /var/snap/microk8s/common/var/lib/kubelet/pods
+          type: DirectoryOrCreate
         name: mountpoint-dir
       - hostPath:
           path: /dev

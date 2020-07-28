@@ -31,7 +31,9 @@ spec:
                   path: /var/snap/microk8s/common/var/lib/kubelet/plugins_registry
             #@overlay/match by="name"
             - name: plugin-dir
-              hostPath: /var/snap/microk8s/common/var/lib/kubelet/plugins
+              hostPath:
+                  path: /var/snap/microk8s/common/var/lib/kubelet/plugins
             #@overlay/match by="name"
             - name: mountpoint-dir
-              hostPath: /var/snap/microk8s/common/var/lib/kubelet/pods
+              hostPath:
+                  path: /var/snap/microk8s/common/var/lib/kubelet/pods

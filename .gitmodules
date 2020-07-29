@@ -13,3 +13,6 @@
 [submodule "roles/ceph-csi-rbd"]
 	path = roles/ceph-csi-rbd
 	url = git@github.com:chris-sanders/k14_ceph_csi_rbd.git
+[submodule "roles/ceph-csi-cephfs"]
+	path = roles/ceph-csi-cephfs
+	url = git@github.com:chris-sanders/k14_ceph_csi_cephfs.git

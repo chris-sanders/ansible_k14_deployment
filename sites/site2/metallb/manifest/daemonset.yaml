@@ -14,7 +14,7 @@ metadata:
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.17
+    helm.sh/chart: metallb-0.1.18
   name: metallb-speaker
 spec:
   selector:
@@ -29,7 +29,7 @@ spec:
         app.kubernetes.io/instance: metallb
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: metallb
-        helm.sh/chart: metallb-0.1.17
+        helm.sh/chart: metallb-0.1.18
     spec:
       containers:
       - args:

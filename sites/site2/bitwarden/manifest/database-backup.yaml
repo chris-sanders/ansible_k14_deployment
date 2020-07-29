@@ -21,6 +21,16 @@ spec:
     spec:
       template:
         spec:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                    - bitwarden
+                topologyKey: kubernetes.io/hostname
           containers:
           - env:
             - name: SOURCE_DATABASE
@@ -48,4 +58,4 @@ spec:
           - name: backup-storage
             persistentVolumeClaim:
               claimName: bitwarden-backup-pv
-  schedule: '* 3 * * *'
+  schedule: 0 3 * * *

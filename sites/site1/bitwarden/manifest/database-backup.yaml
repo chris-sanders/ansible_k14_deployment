@@ -58,4 +58,4 @@ spec:
           - name: backup-storage
             persistentVolumeClaim:
               claimName: bitwarden-backup-pv
-  schedule: '* 3 * * *'
+  schedule: 0 3 * * *

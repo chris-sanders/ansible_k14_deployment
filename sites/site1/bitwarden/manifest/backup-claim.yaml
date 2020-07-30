@@ -10,7 +10,8 @@ metadata:
   name: bitwarden-backup-pv
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 5G
+  storageClassName: cephfs-root

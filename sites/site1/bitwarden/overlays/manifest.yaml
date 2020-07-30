@@ -1,0 +1,10 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@overlay/match by=overlay.subset({"metadata": {"name": "bitwarden-backup-pv"}}), when="1+"
+---
+spec:
+  #@overlay/replace
+  accessModes:
+    - ReadWriteMany
+  #@overlay/match missing_ok=True
+  storageClassName: cephfs-root

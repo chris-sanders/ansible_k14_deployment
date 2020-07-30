@@ -14,3 +14,7 @@
   gather_facts: no
   roles:
       - ceph-csi-rbd
+- hosts: ceph-csi-cephfs
+  gather_facts: no
+  roles:
+      - ceph-csi-cephfs

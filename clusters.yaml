@@ -12,15 +12,15 @@ all:
 metallb:
     hosts:
         site1:
-        site2:
 traefik:
     hosts:
         site1:
-        site2:
 bitwarden:
     hosts:
         site1:
-        site2:
 ceph-csi-rbd:
+    hosts:
+        site1:
+ceph-csi-cephfs:
     hosts:
         site1:

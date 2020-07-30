@@ -29,12 +29,24 @@ ceph_csi_rbd:
         pool: rbd
         default: true
         fstype: xfs
+ceph_csi_cephfs:
+    cluster_id: c28884d0-cab2-11ea-a70f-00163ed49eca
+    mons:
+    - 10.0.8.105
+    - 10.0.8.33
+    - 10.0.8.62
+    user_id: ENC[AES256_GCM,data:FQ8seRg=,iv:DulHLpLyRkbp3VXu2vjlpw5+N1oZcl/L0k67gb1F5Oo=,tag:nsjKsK6hNINbPLoeT0XaKg==,type:str]
+    user_key: ENC[AES256_GCM,data:xw/Z3UTPDEyMjcP8CoXwY/iQYFbeIC8/FkkVRzKnrM4morHoyE5FFw==,iv:i1qnB6CHSNdv1zlYF7Md9yUM2y6mImpp62abcq2HVGM=,tag:3fxVBWC+feHWu1088KygjA==,type:str]
+    storage_classes:
+    -   name: cephfs-root
+        fsname: ceph-fs
+        root_path: /
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-07-29T04:02:36Z'
-    mac: ENC[AES256_GCM,data:if7Uzbhw8Q1HESarhNOycZLno3qd5G8y5IIdNPQvqtSXdHZepuuc5jdi1v8omNgp3WX7Y+IVFusWS7qhQQ3l8ejyelPOQ5h9J7KWserDKm/gQlYaUxc6XOfmC/bLVneZg+ciFEPue/pcynero8xFalfQbBc9iFHVVolOgd5evfs=,iv:8+FxKdO9qm210LoIjFQNleXy9IF1XJzDHcU4N1mDh5E=,tag:tbRsTKMJw2gzDlThej+KGw==,type:str]
+    lastmodified: '2020-07-30T00:41:57Z'
+    mac: ENC[AES256_GCM,data:XJqQQGwkaFqKmzgdsHXx5fZ9Q+h/qkvyzFrcct031ovFp05t0O8xzrbTHl6ZHoChKfeXGjJ/4K6K0n8kbvRkdu4F39y3oxoea3hGAnOX8N3HnkNzAFZ2oXjYnEkzxVU12FerwHJLlv0AG8RQhlwSACI/NuOru1GVnsAwAd5uEHI=,iv:NU0LLMMYeImqdfMbUv/mwBN2brww822Rj29NBS5ZBCI=,tag:C7U0kfVB30jawbzlv2buDw==,type:str]
     pgp:
     -   created_at: '2020-07-22T03:01:24Z'
         enc: |-

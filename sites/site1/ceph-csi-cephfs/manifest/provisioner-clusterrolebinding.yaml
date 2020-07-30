@@ -1,0 +1,19 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: ceph-csi-cephfs
+    chart: ceph-csi-cephfs-2.1.2-canary
+    component: provisioner
+    heritage: Helm
+    release: ceph-csi-cephfs
+  name: ceph-csi-cephfs-provisioner
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ceph-csi-cephfs-provisioner
+subjects:
+- kind: ServiceAccount
+  name: ceph-csi-cephfs-provisioner
+  namespace: ceph-csi-cephfs

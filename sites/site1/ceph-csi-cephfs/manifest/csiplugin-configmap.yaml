@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+data:
+  config.json: '[{"clusterID":"c28884d0-cab2-11ea-a70f-00163ed49eca","monitors":["10.0.8.105","10.0.8.33","10.0.8.62"]}]'
+kind: ConfigMap
+metadata:
+  labels:
+    app: ceph-csi-cephfs
+    chart: ceph-csi-cephfs-2.1.2-canary
+    component: provisioner
+    heritage: Helm
+    release: ceph-csi-cephfs
+  name: ceph-csi-config-cephfs
+  namespace: ceph-csi-cephfs

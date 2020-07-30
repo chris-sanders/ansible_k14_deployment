@@ -1,0 +1,16 @@
+---
+aggregationRule:
+  clusterRoleSelectors:
+  - matchLabels:
+      rbac.cephfs.csi.ceph.com/aggregate-to-ceph-csi-cephfs-provisioner: "true"
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: ceph-csi-cephfs
+    chart: ceph-csi-cephfs-2.1.2-canary
+    component: provisioner
+    heritage: Helm
+    release: ceph-csi-cephfs
+  name: ceph-csi-cephfs-provisioner
+rules: []

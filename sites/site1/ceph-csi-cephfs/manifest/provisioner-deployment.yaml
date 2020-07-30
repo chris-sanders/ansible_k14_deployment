@@ -1,0 +1,193 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: v2.1.2
+          Type: resolved
+          URL: quay.io/cephcsi/cephcsi:v2.1.2
+        URL: quay.io/cephcsi/cephcsi@sha256:a5d30fb10a7dfd6db4481a7fbd7513b2b2ea3b2084e6cbcc880036b095d4061e
+      - Metas:
+        - Tag: v2.1.2
+          Type: resolved
+          URL: quay.io/cephcsi/cephcsi:v2.1.2
+        URL: quay.io/cephcsi/cephcsi@sha256:a5d30fb10a7dfd6db4481a7fbd7513b2b2ea3b2084e6cbcc880036b095d4061e
+      - Metas:
+        - Tag: v2.1.1
+          Type: resolved
+          URL: quay.io/k8scsi/csi-attacher:v2.1.1
+        URL: quay.io/k8scsi/csi-attacher@sha256:4bfcf54fde2be69ccf122bc19dd10389013292b49e7d8a57d1eaa013c3672a91
+      - Metas:
+        - Tag: v1.4.0
+          Type: resolved
+          URL: quay.io/k8scsi/csi-provisioner:v1.4.0
+        URL: quay.io/k8scsi/csi-provisioner@sha256:3a14f801f330d5eacee11f544d2c2c7cc4a733835e25b59887053358108cea69
+      - Metas:
+        - Tag: v0.5.0
+          Type: resolved
+          URL: quay.io/k8scsi/csi-resizer:v0.5.0
+        URL: quay.io/k8scsi/csi-resizer@sha256:6c6a0332693a7c456378f6abd2bb40611826c1e1a733cadbdae2daab3125b71c
+  labels:
+    app: ceph-csi-cephfs
+    chart: ceph-csi-cephfs-2.1.2-canary
+    component: provisioner
+    heritage: Helm
+    release: ceph-csi-cephfs
+  name: ceph-csi-cephfs-provisioner
+  namespace: ceph-csi-cephfs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ceph-csi-cephfs
+      component: provisioner
+      release: ceph-csi-cephfs
+  template:
+    metadata:
+      labels:
+        app: ceph-csi-cephfs
+        chart: ceph-csi-cephfs-2.1.2-canary
+        component: provisioner
+        heritage: Helm
+        release: ceph-csi-cephfs
+    spec:
+      containers:
+      - args:
+        - --csi-address=$(ADDRESS)
+        - --v=5
+        - --timeout=60s
+        - --enable-leader-election=true
+        - --leader-election-type=leases
+        - --retry-interval-start=500ms
+        env:
+        - name: ADDRESS
+          value: unix:///csi/csi-provisioner.sock
+        image: quay.io/k8scsi/csi-provisioner@sha256:3a14f801f330d5eacee11f544d2c2c7cc4a733835e25b59887053358108cea69
+        imagePullPolicy: IfNotPresent
+        name: csi-provisioner
+        resources: {}
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+      - args:
+        - --v=5
+        - --csi-address=$(ADDRESS)
+        - --leader-election=true
+        env:
+        - name: ADDRESS
+          value: unix:///csi/csi-provisioner.sock
+        image: quay.io/k8scsi/csi-attacher@sha256:4bfcf54fde2be69ccf122bc19dd10389013292b49e7d8a57d1eaa013c3672a91
+        imagePullPolicy: IfNotPresent
+        name: csi-attacher
+        resources: {}
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+      - args:
+        - --v=5
+        - --csi-address=$(ADDRESS)
+        - --csiTimeout=60s
+        - --leader-election
+        env:
+        - name: ADDRESS
+          value: unix:///csi/csi-provisioner.sock
+        image: quay.io/k8scsi/csi-resizer@sha256:6c6a0332693a7c456378f6abd2bb40611826c1e1a733cadbdae2daab3125b71c
+        imagePullPolicy: IfNotPresent
+        name: csi-resizer
+        resources: {}
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+      - args:
+        - --nodeid=$(NODE_ID)
+        - --type=cephfs
+        - --controllerserver=true
+        - --pidlimit=-1
+        - --endpoint=$(CSI_ENDPOINT)
+        - --v=5
+        - --drivername=$(DRIVER_NAME)
+        - --metadatastorage=k8s_configmap
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: DRIVER_NAME
+          value: cephfs.csi.ceph.com
+        - name: NODE_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CSI_ENDPOINT
+          value: unix:///csi/csi-provisioner.sock
+        image: quay.io/cephcsi/cephcsi@sha256:a5d30fb10a7dfd6db4481a7fbd7513b2b2ea3b2084e6cbcc880036b095d4061e
+        imagePullPolicy: IfNotPresent
+        name: csi-cephfsplugin
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+          privileged: true
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+        - mountPath: /sys
+          name: host-sys
+        - mountPath: /lib/modules
+          name: lib-modules
+          readOnly: true
+        - mountPath: /dev
+          name: host-dev
+        - mountPath: /etc/ceph-csi-config/
+          name: ceph-csi-config
+        - mountPath: /tmp/csi/keys
+          name: keys-tmp-dir
+      - args:
+        - --type=liveness
+        - --endpoint=$(CSI_ENDPOINT)
+        - --metricsport=8081
+        - --metricspath=/metrics
+        - --polltime=60s
+        - --timeout=3s
+        env:
+        - name: CSI_ENDPOINT
+          value: unix:///csi/csi-provisioner.sock
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        image: quay.io/cephcsi/cephcsi@sha256:a5d30fb10a7dfd6db4481a7fbd7513b2b2ea3b2084e6cbcc880036b095d4061e
+        imagePullPolicy: IfNotPresent
+        name: liveness-prometheus
+        resources: {}
+        volumeMounts:
+        - mountPath: /csi
+          name: socket-dir
+      serviceAccountName: ceph-csi-cephfs-provisioner
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: socket-dir
+      - hostPath:
+          path: /sys
+        name: host-sys
+      - hostPath:
+          path: /lib/modules
+        name: lib-modules
+      - hostPath:
+          path: /dev
+        name: host-dev
+      - configMap:
+          name: ceph-csi-config-cephfs
+        name: ceph-csi-config
+      - emptyDir:
+          medium: Memory
+        name: keys-tmp-dir

@@ -109,10 +109,10 @@ spec:
         volumeMounts:
         - mountPath: /csi
           name: socket-dir
-        - mountPath: /var/lib/kubelet/pods
+        - mountPath: /var/snap/microk8s/common/var/lib/kubelet/pods
           mountPropagation: Bidirectional
           name: mountpoint-dir
-        - mountPath: /var/lib/kubelet/plugins
+        - mountPath: /var/snap/microk8s/common/var/lib/kubelet/plugins
           mountPropagation: Bidirectional
           name: plugin-dir
         - mountPath: /dev
@@ -164,11 +164,11 @@ spec:
           type: Directory
         name: registration-dir
       - hostPath:
-          path: /var/lib/kubelet/pods
+          path: /var/snap/microk8s/common/var/lib/kubelet/pods
           type: DirectoryOrCreate
         name: mountpoint-dir
       - hostPath:
-          path: /var/lib/kubelet/plugins
+          path: /var/snap/microk8s/common/var/lib/kubelet/plugins
           type: Directory
         name: plugin-dir
       - hostPath:

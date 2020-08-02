@@ -3,11 +3,11 @@ kapp:
 metallb:
     addresses:
     - 10.0.9.1-10.0.9.19
-    secretkey: ENC[AES256_GCM,data:Q/dMZ/VvZ7392nC/fGwKrC3+UtM3Cozpwg4pdXun1Z1JORt4dnolhGztWCmAmXwnKyJds9v850dt7Z6hsKGA+08Tv7WnPOIFGfAYmbKlXMzYPav5mMdRUdlSTY+S++Dd2+GlA7kLCOjET10qt/CN1CPefZ8=,iv:/0Gh7aEbQCwWCGKHK2Uc/gJIj/eXCDF+dlCTSwgeyUU=,tag:A6m+/C+lQRPgGAhHRhVz7Q==,type:str]
+    secretkey: ENC[AES256_GCM,data:ZBronGWEmwht9dNHVD7hBTk4+bbfOH6h9zl9UZ+L6LYw8WftPPyHc4yQ6sE5Hi7PButEh23iErjkjTjLQJAfeIvpMJWMSIRvSCjGw9meGanvwX/zrxhRALU/wh2f7fNAiNMRj6RUZGfp9jz/xGc8M8XGXuU=,iv:bDUue9r2yGQrmkjjrBBcHwvmKwZEN6OXdozFLxUi6Pc=,tag:hfdHFXPoILdB1z4Is/e+sQ==,type:str]
 traefik:
     dashboard:
         hostname: dashboard.traefik
-        users: ENC[AES256_GCM,data:JtVmTySIjIJizlT64xStf+LqkddgnG2uh1n96KnEaflvuKRWP8lcmWK8vxdm6n9WzahEGIZfEyGNorFInuOU3w==,iv:tX7yJJ3ka9l8YtxovxDFYsA+KIdAiBi2AM0SrvKFhLc=,tag:0xRroOjz4fmXm4hVh6Mo9Q==,type:str]
+        users: ENC[AES256_GCM,data:t6RCYsGFk6dJevic8OT6slDpFFS1dUdqqW8ZSDjitDVdj3dz17c16fVPNvP0lxgy8JNMimYxZb82iSnRCr3QaQ==,iv:3kk5vbl6te19OLAmsoxFsjs/Lz/5NiSH/OpkJCxPAdw=,tag:fkJA7TNTG0yFThZ8XJb7aw==,type:str]
     ingress_routes:
     -   name: bitwarden
         uri: bitwarden.traefik
@@ -22,8 +22,8 @@ ceph_csi_rbd:
     - 10.0.8.105
     - 10.0.8.33
     - 10.0.8.62
-    user_id: ENC[AES256_GCM,data:bHp+X6A=,iv:VgRPsAlh6DO6k9Cvp23rjXLvJdIKG2RbhLwg0IClMC8=,tag:OyS+rNganKoB6WH6Pz5lsg==,type:str]
-    user_key: ENC[AES256_GCM,data:iIk2BYBkdV8B4HzfIYLTvh3yluTzGpRFfx8MJMyTn1w6us0KGRDJeA==,iv:WG5ZzBK+CllYOf6xxWwUSNb8U17JBzu2aeG+eEWNdfY=,tag:oHtkqrlVuD3hXQ2WUzhSdA==,type:str]
+    user_id: ENC[AES256_GCM,data:0uM6vF8=,iv:QAip9uW0DT2cbVS4dwZFlZ/Fqk2pizqynwo7B7r+9BM=,tag:o0j/4MUq5blBoVEYm+wGmw==,type:str]
+    user_key: ENC[AES256_GCM,data:5GQl605AbMk1/B3n+SmkDi7hNJM8UWHj0k7reG3rHVbdrYd4V9th8w==,iv:ShM8NF2HDEcK+b73QLEMUAZnTgPZc1zOjB2okUL4zms=,tag:U41HUf/CbjhC+cTD6je/+w==,type:str]
     storage_classes:
     -   name: csi-rbd-sc
         pool: rbd
@@ -35,8 +35,8 @@ ceph_csi_cephfs:
     - 10.0.8.105
     - 10.0.8.33
     - 10.0.8.62
-    user_id: ENC[AES256_GCM,data:FQ8seRg=,iv:DulHLpLyRkbp3VXu2vjlpw5+N1oZcl/L0k67gb1F5Oo=,tag:nsjKsK6hNINbPLoeT0XaKg==,type:str]
-    user_key: ENC[AES256_GCM,data:xw/Z3UTPDEyMjcP8CoXwY/iQYFbeIC8/FkkVRzKnrM4morHoyE5FFw==,iv:i1qnB6CHSNdv1zlYF7Md9yUM2y6mImpp62abcq2HVGM=,tag:3fxVBWC+feHWu1088KygjA==,type:str]
+    user_id: ENC[AES256_GCM,data:hU2RynQ=,iv:zugEnaonXodTqyhLa+wUTCHn3WQ/KXqOf17ht4v2sCE=,tag:BeD6Nq2bm0/JBffNGcXnOQ==,type:str]
+    user_key: ENC[AES256_GCM,data:+T7Oc6hQ8VmZDcXLbyX5Ue5lT3imA6v9D0qbFzEqe7ud95rQ2P0rgQ==,iv:anK2CB2x5nKwCMLY5s2zDISx1PdiaVRz1SKgHqBZlyI=,tag:O4zqo9ZOxHpS6QHCQ07L0g==,type:str]
     storage_classes:
     -   name: cephfs-root
         fsname: ceph-fs
@@ -45,29 +45,29 @@ sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-07-30T00:41:57Z'
-    mac: ENC[AES256_GCM,data:XJqQQGwkaFqKmzgdsHXx5fZ9Q+h/qkvyzFrcct031ovFp05t0O8xzrbTHl6ZHoChKfeXGjJ/4K6K0n8kbvRkdu4F39y3oxoea3hGAnOX8N3HnkNzAFZ2oXjYnEkzxVU12FerwHJLlv0AG8RQhlwSACI/NuOru1GVnsAwAd5uEHI=,iv:NU0LLMMYeImqdfMbUv/mwBN2brww822Rj29NBS5ZBCI=,tag:C7U0kfVB30jawbzlv2buDw==,type:str]
+    lastmodified: '2020-08-02T19:51:14Z'
+    mac: ENC[AES256_GCM,data:6gcWQ5Lh5KZjqO88XvRfy9GESyX9LT6HVfHAai92STGuiijH4NpNcLkOCzVMPR3wk/6kpg0bwTp65aNsa7aZ3kLaRMzPD22f26e9ViWS1zLZkADwBX793QRYv7kIw6F0Sro61eUxluCQ5bOOv+X94KHsg1FFRstTCGlSYUhaHks=,iv:Z87nRelf46dxjK8f06jAL39RkUoY/cCbLH+3zoVRXJ4=,tag:6oo7tuwt71cZniywlEqWig==,type:str]
     pgp:
-    -   created_at: '2020-07-22T03:01:24Z'
+    -   created_at: '2020-08-02T19:51:04Z'
         enc: |-
             -----BEGIN PGP MESSAGE-----
 
-            wcFMA8+hman75/nUARAAuPAaoTf+bI3AQzRmqkJn9b16mgE30RhTIVxlJJBwR9uv
-            oet+tdeGyQcZ/z3WqHuFkvjvA+ir+Vvatw1QRitviSY0cv1pakLtG8Dmuw4SNRTW
-            hWaIDiMaipaBEi6mBWopWkb7F5w6FJwXeBL4Tq0AErWAvVVgOdBVtysjNm9+QtHE
-            TAR8DOxKFHnq6U0+qjDCZsKq6XAKGFopn/mcTEXzhajmnX5HS4upXLmbd0B0l8iG
-            YnsRMjk4FO1cTZP0HPPXUCbF6q2i7aXhiiLDyzy/7kkuk4G+NiLs7vNmWve7Jo2q
-            e+JglgyEKb49tzp38CWNJ+Y+9Ae4iyjlvLUleeSx5CmINulNW/nne7U7rSXAoJKM
-            vjk16i68azmuE7SjOu4sM7Wrf+8NiFNZPh22jQoo8cLi7WNzSgxAdndsfv2slje2
-            8dxX5k1avaRh2lb3ymQdOwpjv7klgOhBzoSaVSIkqbvRLksOtQJbBS8/sxVvm29L
-            t4sKrVenc+AsZNLfHQJodbcRv+S3Y3uw3zfwnx/09oMgiY+q5UsEPkvtWN8qaFE5
-            +aUlo5nmYgrlhNNWpo5Rju7Kp7qUX8KpoRrU4UQ7IQkSko9AZz/8Q54tWFPRb7Yr
-            aeqtd47Pnl3lZGDKIZe6DKG9qKKZ4RKo2OU1TONmyile2OeJn+WNZFstCXjxxTLS
-            4AHkfzIVq5l+Fe847f23pvuNV+HtIOA64LzhybTg9uLgKRfj4ELlapx4Bkvz5qTn
-            LPNKY+q7HCNc1KcZYFEIcG7fpuB04JHgt+SmMR4Wcad7nKsxrkNYn35n4shbHqvh
-            wiwA
-            =ZvDt
+            wcFMA8+hman75/nUARAAOJ60MwHvhUAH6p3TQ/Cb936RdeAwmycpE5+EbvrU62gd
+            OrpAl0mHXhPs08kGo8xlY4xvJJFJddYXJfxFs7Sxapqy1KX/ydbi9aE0ScqSjcEF
+            u82hU2YDcn56NnD5P4cXH0kfpBDMoaepOf8HdA0BkulbJgqfRnhQUbgbq3wFBW5E
+            MvV458TKTF7aDpDCe3prwlfN2x1rVZ7IjEKus/eJP89YwW7T80MYtUVhR80l2mpc
+            Vo+Liqe25KCiFGgpmWwBUG4apMpFX6Xozm1HodrnsK+6l4EfgaUpaOB2tfSD98gg
+            Ws2oJ3KVsZPeVHlb36gb0wl2Y61aOmwzeMP3rhJKXUlcGHDyf2TgaMs7IfdwZvA1
+            qSaKcK/UU14XGXzFBqfZtLd0wjKR2eP4T6C6jR2whcgq7kkyJzYHWVZuLltueP0N
+            8MQUAz92+xr22Od+2AsSsDko2XZTZQxkudPbrv0RmCJKltR7U/lFBMvZ+Pf/MQvD
+            0xQS0yQDhcYvAcAXIccmP5G+qOH/bz7tzwreOuEMULQpfwvhlKL09myGS4A3A2RF
+            xHxggISS6oMZJFp6JOhDhxK1D5PXXO48eWvzUgXMXwDL4+9xegWAYDcCIbayWEc9
+            MZkFm5dXDaJbwuxZ8QGqaYYAnkgeEsx/5nL3u3yHqJs2qLFaSv6HoThkl9wiZw3S
+            4AHkLdy3xbHkYM90dJDbjZF1f+FihOCh4DjhetPgm+JEo7Gt4Fzl/YkfAx93m5Rm
+            xgr0qWJSJe/56NVYN5Z/UwDx1DorW3rgP+QY4uKDr3ycLuK1rf10E0n/4qN2M73h
+            7KEA
+            =2POI
             -----END PGP MESSAGE-----
         fp: 211FA1AE58F975F266A3E42E3CF239734CDBFD58
-    encrypted_regex: (.*secret.*|.*password.*|.*user.*)
+    encrypted_regex: (.*secret.*|.*password.*|.*user.*|.*admin.*)
     version: 3.5.0

@@ -16,3 +16,6 @@
 [submodule "roles/ceph-csi-cephfs"]
 	path = roles/ceph-csi-cephfs
 	url = git@github.com:chris-sanders/k14_ceph_csi_cephfs.git
+[submodule "roles/cert_manager"]
+	path = roles/cert-manager
+	url = https://github.com/chris-sanders/k14_cert_manager.git

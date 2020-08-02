@@ -24,3 +24,6 @@ ceph-csi-rbd:
 ceph-csi-cephfs:
     hosts:
         site1:
+cert-manager:
+    hosts:
+        site1:

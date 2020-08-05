@@ -18,3 +18,7 @@
   gather_facts: no
   roles:
       - ceph-csi-cephfs
+- hosts: cert-manager
+  gather_facts: no
+  roles:
+      - cert-manager

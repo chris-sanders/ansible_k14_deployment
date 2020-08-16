@@ -8,22 +8,3 @@ all:
         ansible_connection: local
         ansible_python_interpreter: "{{ansible_playbook_python}}"
         site_file: site.yaml
-
-metallb:
-    hosts:
-        site1:
-traefik:
-    hosts:
-        site1:
-bitwarden:
-    hosts:
-        site1:
-ceph-csi-rbd:
-    hosts:
-        site1:
-ceph-csi-cephfs:
-    hosts:
-        site1:
-cert-manager:
-    hosts:
-        site1:

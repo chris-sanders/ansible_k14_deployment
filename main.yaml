@@ -1,24 +1,13 @@
-- hosts: metallb
+- hosts: site1
   gather_facts: no
-  roles:
-      - metallb
-- hosts: traefik
-  gather_facts: no
-  roles:
-      - traefik
-- hosts: bitwarden
-  gather_facts: no
-  roles:
-      - bitwarden
-- hosts: ceph-csi-rbd
-  gather_facts: no
-  roles:
-      - ceph-csi-rbd
-- hosts: ceph-csi-cephfs
-  gather_facts: no
-  roles:
-      - ceph-csi-cephfs
-- hosts: cert-manager
-  gather_facts: no
-  roles:
-      - cert-manager
+  tasks:
+      - name: Include site1 roles 
+        include_role:
+            name: "{{ item }}"
+        loop:
+            - metallb
+            - traefik
+            - bitwarden
+            - ceph-csi-rbd
+            - ceph-csi-cephfs
+            - cert-manager

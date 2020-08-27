@@ -1,13 +1,14 @@
 - hosts: site1
   gather_facts: no
   tasks:
-      - name: Include site1 roles 
-        include_role:
-            name: "{{ item }}"
-        loop:
-            - metallb
-            - traefik
-            - bitwarden
-            - ceph-csi-rbd
-            - ceph-csi-cephfs
-            - cert-manager
+    - name: Include site1 roles
+      include_role:
+          name: "{{ item }}"
+          public: no
+      loop:
+          - metallb
+          - traefik
+          - bitwarden
+          - ceph-csi-rbd
+          - ceph-csi-cephfs
+          - cert-manager

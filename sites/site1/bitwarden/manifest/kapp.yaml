@@ -1,0 +1,30 @@
+apiVersion: kapp.k14s.io/v1alpha1
+kind: Config
+rebaseRules:
+- path:
+  - metadata
+  - annotations
+  type: copy
+  sources:
+  - existing
+  - new
+  resourceMatchers:
+  - apiVersionKindMatcher:
+      apiVersion: v1
+      kind: Pod
+changeGroupBindings:
+- name: change-groups.kapp.k14s.io/app
+  resourceMatchers:
+  - notMatcher:
+      matcher:
+        apiVersionKindMatcher:
+          apiVersion: v1
+          kind: Pod
+changeRuleBindings:
+- rules:
+  - upsert after upserting change-groups.kapp.k14s.io/app
+  ignoreIfCyclical: false
+  resourceMatchers:
+  - apiVersionKindMatcher:
+      apiVersion: v1
+      kind: Pod

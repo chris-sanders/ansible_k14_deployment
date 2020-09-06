@@ -41,3 +41,34 @@ spec:
       port: 80
       namespace: bitwarden
   tls: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-tls-acmedns
+  namespace: acme-dns
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: Host(`auth.traefik`)
+    kind: Rule
+    services:
+    - name: acmedns
+      port: 80
+      namespace: acme-dns
+  tls: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: traefik-udp-acmedns
+  namespace: acme-dns
+spec:
+  entryPoints:
+  - udp53
+  routes:
+  - services:
+    - name: acmedns
+      port: 53
+      namespace: acme-dns

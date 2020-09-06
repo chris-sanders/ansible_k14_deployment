@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/instance: traefik
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: traefik
-    helm.sh/chart: traefik-8.9.1
+    helm.sh/chart: traefik-9.1.1
   name: traefik
 spec:
   ports:
@@ -19,6 +19,27 @@ spec:
     port: 443
     protocol: TCP
     targetPort: websecure
+  selector:
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/name: traefik
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: null
+  labels:
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: traefik
+    helm.sh/chart: traefik-9.1.1
+  name: traefik-udp
+spec:
+  ports:
+  - name: udp53
+    port: 53
+    protocol: UDP
+    targetPort: udp53
   selector:
     app.kubernetes.io/instance: traefik
     app.kubernetes.io/name: traefik

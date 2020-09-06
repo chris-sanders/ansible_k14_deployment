@@ -14,8 +14,23 @@ traefik:
         namespace: bitwarden
         service_name: bitwarden
         service_port: 80
+    -   name: acmedns
+        uri: auth.traefik
+        namespace: acme-dns
+        service_name: acmedns
+        service_port: 80
+    ingress_routes_udp:
+    -   name: acmedns
+        namespace: acme-dns
+        port: 53
+        entrypoint: udp53
 bitwarden:
     namespace: bitwarden
+acme_dns:
+    namespace: acme-dns
+    domain: auth.traefik
+    email: admin.auth.traefik
+    public_ip: 10.0.9.2
 ceph_csi_rbd:
     cluster_id: c28884d0-cab2-11ea-a70f-00163ed49eca
     mons:
@@ -45,8 +60,8 @@ sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-08-02T19:51:14Z'
-    mac: ENC[AES256_GCM,data:6gcWQ5Lh5KZjqO88XvRfy9GESyX9LT6HVfHAai92STGuiijH4NpNcLkOCzVMPR3wk/6kpg0bwTp65aNsa7aZ3kLaRMzPD22f26e9ViWS1zLZkADwBX793QRYv7kIw6F0Sro61eUxluCQ5bOOv+X94KHsg1FFRstTCGlSYUhaHks=,iv:Z87nRelf46dxjK8f06jAL39RkUoY/cCbLH+3zoVRXJ4=,tag:6oo7tuwt71cZniywlEqWig==,type:str]
+    lastmodified: '2020-09-06T18:53:44Z'
+    mac: ENC[AES256_GCM,data:m4R6qcPzMEldwNI1Cp4enbVhMUdbyVzkDDzpqwdw7ZAqaF21J8/MOuUpFG2/09Tdbl181KLnGDDB3GJc4vqNw+r/xJuL1G2m4QTgQbolx3lwAIQ/aOMfmpwAEMSucRfKqBndvPrpsybfC6g71ourVJJv+Rezhb6WmpCYjqOQjm0=,iv:6w65ycvA2j1JlaFdxDo79M7b6ugrHIzWQiAJn2DN0HQ=,tag:caoDAJBoQhwTy5XAWcq8Aw==,type:str]
     pgp:
     -   created_at: '2020-08-02T19:51:04Z'
         enc: |-

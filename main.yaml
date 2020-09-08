@@ -12,3 +12,4 @@
           - ceph-csi-rbd
           - ceph-csi-cephfs
           - cert-manager
+          - acme-dns

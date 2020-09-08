@@ -1,5 +1,5 @@
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-issuers
 rules:
 - apiGroups:
@@ -45,7 +45,7 @@ rules:
   - create
   - patch
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -54,7 +54,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-clusterissuers
 rules:
 - apiGroups:
@@ -91,7 +91,7 @@ rules:
   - create
   - patch
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -100,7 +100,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-certificates
 rules:
 - apiGroups:
@@ -159,7 +159,7 @@ rules:
   - create
   - patch
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -168,7 +168,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-orders
 rules:
 - apiGroups:
@@ -225,7 +225,7 @@ rules:
   - create
   - patch
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -234,7 +234,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-challenges
 rules:
 - apiGroups:
@@ -319,7 +319,7 @@ rules:
   - list
   - watch
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -328,7 +328,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-ingress-shim
 rules:
 - apiGroups:
@@ -382,7 +382,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
     rbac.authorization.k8s.io/aggregate-to-view: "true"
@@ -408,7 +408,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
   name: cert-manager-edit
@@ -426,7 +426,7 @@ rules:
   - patch
   - update
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
@@ -435,7 +435,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-issuers
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -446,7 +446,7 @@ subjects:
   name: cert-manager
   namespace: cert-manager
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
@@ -455,7 +455,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-clusterissuers
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -466,7 +466,7 @@ subjects:
   name: cert-manager
   namespace: cert-manager
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
@@ -475,7 +475,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-certificates
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -486,7 +486,7 @@ subjects:
   name: cert-manager
   namespace: cert-manager
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
@@ -495,7 +495,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-orders
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -506,7 +506,7 @@ subjects:
   name: cert-manager
   namespace: cert-manager
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
@@ -515,7 +515,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-challenges
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -526,7 +526,7 @@ subjects:
   name: cert-manager
   namespace: cert-manager
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
@@ -535,7 +535,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-controller-ingress-shim
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -546,7 +546,7 @@ subjects:
   name: cert-manager
   namespace: cert-manager
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   labels:
@@ -555,7 +555,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager:leaderelection
   namespace: cert-manager
 rules:
@@ -576,7 +576,7 @@ rules:
   verbs:
   - create
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
@@ -585,7 +585,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager:leaderelection
   namespace: cert-manager
 roleRef:

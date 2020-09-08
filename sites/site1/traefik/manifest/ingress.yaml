@@ -49,7 +49,7 @@ metadata:
   namespace: acme-dns
 spec:
   entryPoints:
-  - websecure
+  - web
   routes:
   - match: Host(`auth.traefik`)
     kind: Rule
@@ -57,7 +57,17 @@ spec:
     - name: acmedns
       port: 80
       namespace: acme-dns
-  tls: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: local-ipwhitelist
+spec:
+  ipWhiteList:
+    sourceRange:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteUDP

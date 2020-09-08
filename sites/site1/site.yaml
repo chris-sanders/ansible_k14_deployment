@@ -14,11 +14,13 @@ traefik:
         namespace: bitwarden
         service_name: bitwarden
         service_port: 80
+        insecure: false
     -   name: acmedns
         uri: auth.traefik
         namespace: acme-dns
         service_name: acmedns
         service_port: 80
+        insecure: true
     ingress_routes_udp:
     -   name: acmedns
         namespace: acme-dns
@@ -60,8 +62,8 @@ sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-09-06T18:53:44Z'
-    mac: ENC[AES256_GCM,data:m4R6qcPzMEldwNI1Cp4enbVhMUdbyVzkDDzpqwdw7ZAqaF21J8/MOuUpFG2/09Tdbl181KLnGDDB3GJc4vqNw+r/xJuL1G2m4QTgQbolx3lwAIQ/aOMfmpwAEMSucRfKqBndvPrpsybfC6g71ourVJJv+Rezhb6WmpCYjqOQjm0=,iv:6w65ycvA2j1JlaFdxDo79M7b6ugrHIzWQiAJn2DN0HQ=,tag:caoDAJBoQhwTy5XAWcq8Aw==,type:str]
+    lastmodified: '2020-09-08T01:57:09Z'
+    mac: ENC[AES256_GCM,data:/8MYOVBGr8igcAy3bf/rvGo6HjqHSYK5ch0wDboz8mdUoH0s0gPOTbhGxp/tKFA5lpAfvDDUmVW/V2VH5+qUBEt45lEr3to5vJDRbzvfggJtvyvWFlhjgU8vaRQLuxw9/C0HQr4CBd41KDEKcrHbHBiKSNh182rGxkW6hJ+KrBE=,iv:lVaW8F1pnm4Ml19KlBJ7xEnvg6iVxTZxB1lMpBiIJ7Y=,tag:lpIqEKNF+pn44jd9hTo8dQ==,type:str]
     pgp:
     -   created_at: '2020-08-02T19:51:04Z'
         enc: |-

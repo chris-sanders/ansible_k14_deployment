@@ -47,6 +47,7 @@ spec:
         - --ping=true
         - --providers.kubernetescrd
         - --providers.kubernetesingress
+        - --serversTransport.insecureSkipVerify=true
         image: index.docker.io/library/traefik@sha256:f5af5a5ce17fc3e353b507e8acce65d7f28126408a8c92dc3cac246d023dc9e8
         imagePullPolicy: IfNotPresent
         livenessProbe:

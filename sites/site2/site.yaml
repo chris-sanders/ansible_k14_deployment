@@ -14,14 +14,15 @@ traefik:
         namespace: bitwarden
         service_name: bitwarden
         service_port: 80
+        insecure: false
 bitwarden:
     namespace: bitwarden
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
-    lastmodified: '2020-07-20T22:55:45Z'
-    mac: ENC[AES256_GCM,data:EFDuLMukHzo0jJEqgTDzcCNrrDRtXKBqMIXO0dhjlfeDA6sWf5cfTkSeVCzox9HBDvQ9LzME8Wgb4AtE8LHUD8GjZMYQQ5Sg0mJbOYp8LizE50H1riBtroKlvg54pfLi5r9GvkpsEEduc4GQtLPWnnepQr4popb+AEixV2jmGp0=,iv:Gt72K3vktrE1pUmaDswOeL4huYH29NvjAcdJQC632/8=,tag:sTpunEJDtGFXbsaVBVpH/A==,type:str]
+    lastmodified: '2020-09-08T01:57:24Z'
+    mac: ENC[AES256_GCM,data:rjheygbpnLWHdJ02f9BIy0lv0Mrs/eq+ubMoAhYQKAlkChMT68dExPq8SvuiG4GMiFDqgHAEG55A3dg9rhcNg5J6RYOe2h1v5XwXIlilhYSufUZ8rxDyLcTIQ68z2IwomxzmD05P5ecKGsMeHxe6q82i1djixj1Pyi3Q9pvbl7w=,iv:4i4GJtzmRX+M0nVZK7aB8vTAcsEcWM4exRWWqbnSMmA=,tag:p4zW8I3ZMFaP04hzMpG9CA==,type:str]
     pgp:
     -   created_at: '2020-07-02T01:55:31Z'
         enc: |-

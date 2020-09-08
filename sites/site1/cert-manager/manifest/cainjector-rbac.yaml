@@ -1,5 +1,5 @@
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cainjector
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-cainjector
 rules:
 - apiGroups:
@@ -74,7 +74,7 @@ rules:
   - watch
   - update
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
@@ -83,7 +83,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cainjector
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-cainjector
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -94,7 +94,7 @@ subjects:
   name: cert-manager-cainjector
   namespace: cert-manager
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   labels:
@@ -103,7 +103,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cainjector
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-cainjector:leaderelection
   namespace: cert-manager
 rules:
@@ -125,7 +125,7 @@ rules:
   verbs:
   - create
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
@@ -134,7 +134,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cainjector
-    helm.sh/chart: cert-manager-v0.1.0
+    helm.sh/chart: cert-manager-v1.0.1
   name: cert-manager-cainjector:leaderelection
   namespace: cert-manager
 roleRef:

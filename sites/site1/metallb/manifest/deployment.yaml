@@ -5,16 +5,16 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: 0.9.3-debian-10-r123
+        - Tag: 0.9.3-debian-10-r141
           Type: resolved
-          URL: docker.io/bitnami/metallb-controller:0.9.3-debian-10-r123
-        URL: index.docker.io/bitnami/metallb-controller@sha256:b92950f85432926d5e1011b0280cfee8fafc3322db5c29d91d092cd5ec9840dd
+          URL: docker.io/bitnami/metallb-controller:0.9.3-debian-10-r141
+        URL: index.docker.io/bitnami/metallb-controller@sha256:0e5f36e8e8f8a97996ca62bdbda76865c84cb63aff104b8a0a5183a84a7af499
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: metallb
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metallb
-    helm.sh/chart: metallb-0.1.21
+    helm.sh/chart: metallb-0.1.22
   name: metallb-controller
 spec:
   revisionHistoryLimit: 3
@@ -30,13 +30,13 @@ spec:
         app.kubernetes.io/instance: metallb
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: metallb
-        helm.sh/chart: metallb-0.1.21
+        helm.sh/chart: metallb-0.1.22
     spec:
       containers:
       - args:
         - --port=7472
         - --config=metallb-config
-        image: index.docker.io/bitnami/metallb-controller@sha256:b92950f85432926d5e1011b0280cfee8fafc3322db5c29d91d092cd5ec9840dd
+        image: index.docker.io/bitnami/metallb-controller@sha256:0e5f36e8e8f8a97996ca62bdbda76865c84cb63aff104b8a0a5183a84a7af499
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3

@@ -7,7 +7,7 @@ spec:
   entryPoints:
   - websecure
   routes:
-  - match: Host(`dashboard.k3s.traefik`)
+  - match: Host(`dashboard.traefik`)
     kind: Rule
     middlewares:
     - name: auth
@@ -34,10 +34,51 @@ spec:
   entryPoints:
   - websecure
   routes:
-  - match: Host(`bitwarden.k3s.traefik`)
+  - match: Host(`bitwarden.traefik`)
     kind: Rule
     services:
     - name: bitwarden
       port: 80
       namespace: bitwarden
   tls: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-tls-acmedns
+  namespace: acme-dns
+spec:
+  entryPoints:
+  - web
+  routes:
+  - match: Host(`auth.traefik`)
+    kind: Rule
+    services:
+    - name: acmedns
+      port: 80
+      namespace: acme-dns
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: local-ipwhitelist
+spec:
+  ipWhiteList:
+    sourceRange:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: traefik-udp-acmedns
+  namespace: acme-dns
+spec:
+  entryPoints:
+  - udp53
+  routes:
+  - services:
+    - name: acmedns
+      port: 53
+      namespace: acme-dns

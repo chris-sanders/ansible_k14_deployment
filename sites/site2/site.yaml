@@ -2,48 +2,59 @@ kapp:
     namespace: kapp
 metallb:
     addresses:
-    - 10.0.9.20-10.0.9.29
-    secretkey: ENC[AES256_GCM,data:oi6KEiITSRyRE7eVMEBrVCWdvw78+NUvMEUegl1CN5mKTN1MU82zmztuCFvi9HIkSJJFmqV7UIE6jXaMFVWgaxMGLiUCbZwF8G4XZzJ6kSaH2bpyybL59AupihlsxsAxVqfxlQnogG2yGTr7JViWuZo5VkPA6eAZZyqZ2rN2ZuHadHcC62c2ZW8AOMgDXLjrFCpJYrVaexGdGUslce5DZAUkUlG+AMA4MpWTfQ==,iv:mzXvzeJKmvq85i0cPBgI09NU3jQmYQP3E9pp0GjXHbs=,tag:4JBkhpLz6clHTODcTdU5Tw==,type:str]
+    - 10.0.9.1-10.0.9.19
+    secretkey: ZDNKSTlURHNoVVBXYTMxa0x6VWg5aHM2VlZaOC82dTgxS2Z3dGFWMlZVNllyamJMa3ZiU0tzYlZqdVdaSGd5UFF5ejhiQTh0MytuOUtZVk53NXVvMAo=
 traefik:
     dashboard:
-        hostname: dashboard.k3s.traefik
-        users: ENC[AES256_GCM,data:pSsBuIIQPr6XyxKx3iEaLsajUWXb15NaQd4efH0g8aPTNhsa/NjIP3b8edQzmGR5yN1ddJjpzqM56qT482+Tlw==,iv:jKGi2SfyGvpDAXM87rAxKEKeKxUao2QVnJIlf7pE8eQ=,tag:C4P/1HtQUigguPT9Ft938Q==,type:str]
+        hostname: dashboard.traefik
+        users: dHJhZWZpazokJGFwcjEkJEprR3JXS3R2JCREWm9aQXJveWJpUDcyN3NCMEs2cGUwCg==
     ingress_routes:
     -   name: bitwarden
-        uri: bitwarden.k3s.traefik
+        uri: bitwarden.traefik
         namespace: bitwarden
         service_name: bitwarden
         service_port: 80
         insecure: false
+    -   name: acmedns
+        uri: auth.traefik
+        namespace: acme-dns
+        service_name: acmedns
+        service_port: 80
+        insecure: true
+    ingress_routes_udp:
+    -   name: acmedns
+        namespace: acme-dns
+        port: 53
+        entrypoint: udp53
 bitwarden:
     namespace: bitwarden
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    lastmodified: '2020-09-08T01:57:24Z'
-    mac: ENC[AES256_GCM,data:rjheygbpnLWHdJ02f9BIy0lv0Mrs/eq+ubMoAhYQKAlkChMT68dExPq8SvuiG4GMiFDqgHAEG55A3dg9rhcNg5J6RYOe2h1v5XwXIlilhYSufUZ8rxDyLcTIQ68z2IwomxzmD05P5ecKGsMeHxe6q82i1djixj1Pyi3Q9pvbl7w=,iv:4i4GJtzmRX+M0nVZK7aB8vTAcsEcWM4exRWWqbnSMmA=,tag:p4zW8I3ZMFaP04hzMpG9CA==,type:str]
-    pgp:
-    -   created_at: '2020-07-02T01:55:31Z'
-        enc: |-
-            -----BEGIN PGP MESSAGE-----
-
-            wcFMA8+hman75/nUARAAUf9GZOEenBa9pBQVL0uTjrnz2D3YtLEs4/NiwfF9K3Sl
-            74PmQRyojH5UI30olGPKzdSbotQHwCJJ96ICE6ne205RBoLFbbRqVmsNzd90AwxY
-            9MEvg9YHqZrurA4zuGo+K2T5/fUJUQHAhGPfSoyZi+hSfVGYlLbgP64zPkhsX/0f
-            BGc342P3KOsgFZOQ1xkt0swBgJc/9+7d91c5SZoUOGmqk04/ixIkx0fApk986aPK
-            AoPxI2GSUtwFAKMg3quN8OE1ClWAzq4BTgS1Y1r9J0F3B2toTPLYQ/vIT5dqq281
-            fB0qEpYfuadDsy7sOrhr3bp90Tcf53nhxO8HslWd1ZCI+p7zAdeS1Gp/Z9hZn4T6
-            Bq1ZfxY5pH7uXdsFIoVqHRGf88Yyf+bttPiC70gHMivJOuYScNeuP/zd4nXPAKxg
-            RZ98rmX3kdKUnQFMhBy5lDr8Y3pTKRhQGPaaspQXqi6iDkz57GqrO5Bxk1JyGB8T
-            adi7hA8o16EuFxagJtROUVskzRtq/xBfFZViegi4yHhR/Y5gettGZvJgqW/Mk8NJ
-            L5c9vQVi5CQdK3qF+oQherQg3v/P2DUCagK2vNMsMTu0FhiThMA3ha6YVwUAbCgD
-            13u4tqglnTY1Y0qiLJizXXJRICXHO9n69QQQBTPrvzLBNoFyGE5OktGRojiTq5/S
-            4AHk5DfIy545r7/zCvXQm8t4f+FkquAF4LDhVtLgceLcunCO4DnlayTz8FxfzGXQ
-            y0kTajmJTLZgwcQpIJ10gjstt/ehyHLgU+Qo3CpTC4q/mBuk3scN5zxH4p84J4fh
-            S2oA
-            =ECUM
-            -----END PGP MESSAGE-----
-        fp: 211FA1AE58F975F266A3E42E3CF239734CDBFD58
-    encrypted_regex: (.*secret.*|.*password.*|.*users.*)
-    version: 3.5.0
+acme_dns:
+    namespace: acme-dns
+    domain: auth.traefik
+    email: admin.traefik
+    public_ip: 10.0.9.2
+ceph_csi_rbd:
+    cluster_id: c28884d0-cab2-11ea-a70f-00163ed49eca
+    mons:
+    - 10.0.8.105
+    - 10.0.8.33
+    - 10.0.8.62
+    user_id: admin
+    user_key: AQDE2xVfOiA9IxAAkAHRNrkvx6310BklqabzkA==
+    storage_classes:
+    -   name: csi-rbd-sc
+        pool: rbd
+        default: true
+        fstype: xfs
+ceph_csi_cephfs:
+    cluster_id: c28884d0-cab2-11ea-a70f-00163ed49eca
+    mons:
+    - 10.0.8.105
+    - 10.0.8.33
+    - 10.0.8.62
+    user_id: admin
+    user_key: AQDE2xVfOiA9IxAAkAHRNrkvx6310BklqabzkA==
+    storage_classes:
+    -   name: cephfs-root
+        fsname: ceph-fs
+        root_path: /

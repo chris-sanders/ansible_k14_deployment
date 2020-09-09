@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Tag: latest
+          Type: resolved
+          URL: joohoi/acme-dns:latest
+        URL: index.docker.io/joohoi/acme-dns@sha256:13265c22095c5e2fd5122610d99ab5742ae9b2319205a6d02165805d5f5afbc6
+    kompose.cmd: kompose convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: acmedns
+  name: acmedns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: acmedns
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: acmedns
+    spec:
+      containers:
+      - image: index.docker.io/joohoi/acme-dns@sha256:13265c22095c5e2fd5122610d99ab5742ae9b2319205a6d02165805d5f5afbc6
+        name: acmedns
+        ports:
+        - containerPort: 443
+        - containerPort: 53
+        - containerPort: 53
+          protocol: UDP
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/acme-dns
+          name: acmedns-claim0
+          readOnly: true
+        - mountPath: /var/lib/acme-dns
+          name: acmedns-claim1
+      restartPolicy: Always
+      volumes:
+      - configMap:
+          name: acme-dns-config
+        name: acmedns-claim0
+      - name: acmedns-claim1
+        persistentVolumeClaim:
+          claimName: acmedns-claim1

@@ -8,8 +8,21 @@
       loop:
           - metallb
           - traefik
-          - bitwarden
           - ceph-csi-rbd
-          - ceph-csi-cephfs
-          - cert-manager
           - acme-dns
+          - cert-manager
+          - bitwarden
+- hosts: site2
+  gather_facts: no
+  tasks:
+    - name: Include site2 roles
+      include_role:
+          name: "{{ item }}"
+          public: no
+      loop:
+          - metallb
+          - traefik
+          - ceph-csi-rbd
+          - acme-dns
+          - cert-manager
+          - bitwarden

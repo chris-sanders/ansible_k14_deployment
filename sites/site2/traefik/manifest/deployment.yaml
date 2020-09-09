@@ -5,15 +5,15 @@ metadata:
   annotations:
     kbld.k14s.io/images: |
       - Metas:
-        - Tag: 2.2.5
+        - Tag: 2.2.8
           Type: resolved
-          URL: traefik:2.2.5
-        URL: index.docker.io/library/traefik@sha256:9e49ebc167440e6e0cb506ffe342c7fa61ed255a946a6d968122ae3a46012978
+          URL: traefik:2.2.8
+        URL: index.docker.io/library/traefik@sha256:f5af5a5ce17fc3e353b507e8acce65d7f28126408a8c92dc3cac246d023dc9e8
   labels:
     app.kubernetes.io/instance: traefik
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: traefik
-    helm.sh/chart: traefik-8.9.1
+    helm.sh/chart: traefik-9.1.1
   name: traefik
 spec:
   replicas: 1
@@ -33,20 +33,23 @@ spec:
         app.kubernetes.io/instance: traefik
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: traefik
-        helm.sh/chart: traefik-8.9.1
+        helm.sh/chart: traefik-9.1.1
     spec:
       containers:
       - args:
         - --global.checknewversion
         - --global.sendanonymoususage
         - --entryPoints.traefik.address=:9000/tcp
+        - --entryPoints.udp53.address=:5300/udp
         - --entryPoints.web.address=:8000/tcp
         - --entryPoints.websecure.address=:8443/tcp
         - --api.dashboard=true
         - --ping=true
         - --providers.kubernetescrd
         - --providers.kubernetesingress
-        image: index.docker.io/library/traefik@sha256:9e49ebc167440e6e0cb506ffe342c7fa61ed255a946a6d968122ae3a46012978
+        - --serversTransport.insecureSkipVerify=true
+        image: index.docker.io/library/traefik@sha256:f5af5a5ce17fc3e353b507e8acce65d7f28126408a8c92dc3cac246d023dc9e8
+        imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
           httpGet:
@@ -61,6 +64,9 @@ spec:
         - containerPort: 9000
           name: traefik
           protocol: TCP
+        - containerPort: 5300
+          name: udp53
+          protocol: UDP
         - containerPort: 8000
           name: web
           protocol: TCP

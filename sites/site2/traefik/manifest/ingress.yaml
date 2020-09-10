@@ -14,7 +14,8 @@ spec:
     services:
     - name: api@internal
       kind: TraefikService
-  tls: {}
+  tls:
+    secretName: traefik-cert
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -40,7 +41,8 @@ spec:
     - name: bitwarden
       port: 80
       namespace: bitwarden
-  tls: {}
+  tls:
+    secretName: traefik-cert
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -51,7 +53,7 @@ spec:
   entryPoints:
   - web
   routes:
-  - match: Host(`auth.traefik`)
+  - match: Host(`dns.traefik`)
     kind: Rule
     services:
     - name: acmedns

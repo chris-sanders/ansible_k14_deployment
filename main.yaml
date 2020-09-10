@@ -22,7 +22,7 @@
       loop:
           - metallb
           - traefik
-          - ceph-csi-rbd
+          #- ceph-csi-rbd
           - acme-dns
           - cert-manager
           - bitwarden

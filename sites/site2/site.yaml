@@ -7,7 +7,7 @@ metallb:
 traefik:
     dashboard:
         hostname: dashboard.traefik
-        users: dHJhZWZpazokJGFwcjEkJEprR3JXS3R2JCREWm9aQXJveWJpUDcyN3NCMEs2cGUwCg==
+        users: dHJhZWZpazokYXByMSR0NjRUdDJDdCRxSDRsWTlna0tnL2ZJVkJrUDlPdjku
     ingress_routes:
     -   name: bitwarden
         uri: bitwarden.traefik
@@ -30,7 +30,7 @@ bitwarden:
     namespace: bitwarden
 acme_dns:
     namespace: acme-dns
-    domain: auth.traefik
+    domain: dns.traefik
     email: admin.traefik
     public_ip: 10.0.9.2
 ceph_csi_rbd:

@@ -5,10 +5,10 @@ metallb:
     - 10.0.9.1-10.0.9.19
     secretkey: ZDNKSTlURHNoVVBXYTMxa0x6VWg5aHM2VlZaOC82dTgxS2Z3dGFWMlZVNllyamJMa3ZiU0tzYlZqdVdaSGd5UFF5ejhiQTh0MytuOUtZVk53NXVvMAo=
 traefik:
-    custom_cert: true
-    cert_domains:
-        - traefik
-        - '*.traefik'
+    #custom_cert: true
+    #cert_domains:
+    #    - traefik
+    #    - '*.traefik'
     dashboard:
         hostname: dashboard.traefik
         users: dHJhZWZpazokYXByMSR0NjRUdDJDdCRxSDRsWTlna0tnL2ZJVkJrUDlPdjku

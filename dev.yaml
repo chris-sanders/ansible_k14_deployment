@@ -1,0 +1,9 @@
+- hosts: site2
+  gather_facts: no
+  tasks:
+    - name: Include site1 roles
+      include_role:
+          name: "{{ item }}"
+          public: no
+      loop:
+          - metallb
